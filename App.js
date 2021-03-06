@@ -7,7 +7,7 @@ const Stack = createStackNavigator(); // https://reactnative.dev/docs/navigation
 /* MOVER TODO EL CONTENIDO A main.js y main.css.js respectivamente */
 
 
-import { Text, View, Image, Button, FlatList, SafeAreaView } from 'react-native';
+import { Text, View, Image, Button, FlatList, SafeAreaView, Alert } from 'react-native';
 
 import styles from './app.css';
 
@@ -50,7 +50,7 @@ export default function App() {
 
       <SafeAreaView style={styles.container}>
         <View style={styles.end}>
-          <Button color="#000" title="add task"/>
+          <Button color="#000" title="add task" onPress={() => Alert.alert('hello wn')}/>
         </View>
         <FlatList
           data={DATA}
