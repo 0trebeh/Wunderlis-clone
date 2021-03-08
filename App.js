@@ -1,76 +1,24 @@
-import React from 'react';
+import 'react-native-gesture-handler';
+import * as React from 'react';
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-const Stack = createStackNavigator(); // https://reactnative.dev/docs/navigation
+import main from './app/main';
+import profile from './app/profile/profile';
 
-/* MOVER TODO EL CONTENIDO A main.js y main.css.js respectivamente */
+import notifications from './app/utils/notifications';
 
+const Stack = createStackNavigator();
 
-import { Text, View, Image, Button, FlatList, SafeAreaView, Alert } from 'react-native';
-
-import styles from './app.css';
-
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
-  },
-];
-
-const Item = ({ title }) => (
-  <View style={styles.item}>
-    <View style={styles.itemtop}></View>
-    <Text style={styles.title}>{title}</Text>
-  </View>
-);
-
-export default function App() {
-
-  const renderItem = ({ item }) => (
-    <Item title={item.title} />
-  );
-
+export default function App({ navigation }) {
+    
   return (
-    <View style={styles.container}>
-      <Text>I love you!</Text>
-      <Image source={{uri: 'https://picsum.photos/200/200'}} style={styles.img}/>
-      
-      <View style={styles.center}>
-        <Button color="#000" title="center button"/>
-      </View>
-
-      <SafeAreaView style={styles.container}>
-        <View style={styles.end}>
-          <Button color="#000" title="add task" onPress={() => Alert.alert('hello wn')}/>
-        </View>
-        <FlatList
-          data={DATA}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-        />
-      </SafeAreaView>
-
-
-      <View style={styles.fixToText}>
-        <Button
-          title="Left button"
-          onPress={() => console.log('Left button pressed')}
-        />
-        <Button
-          title="Right button"
-          onPress={() => console.log('Right button pressed')}
-        />
-      </View>
-
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={main} options={{ title: 'Welcome' }} />
+        <Stack.Screen name="Profile" component={profile} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
