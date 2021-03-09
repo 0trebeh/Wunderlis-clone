@@ -34,6 +34,7 @@ export default function main({ navigation }) {
         <View style={styles.container}>
             <View style={styles.end}>
                 <Button color="#000" title="Profile" onPress={() => navigation.navigate('Profile')}/>
+                <Button color="#000" title="Login" onPress={() => navigation.navigate('Login')}/>
             </View>
             <Image source={{uri: 'https://picsum.photos/200/200'}} style={styles.img}/>
         

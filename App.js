@@ -6,6 +6,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import main from './app/main';
 import profile from './app/profile/profile';
+import login from './app/login/login'
+import register from './app/register/register'
 
 import notifications from './app/utils/notifications';
 
@@ -18,6 +20,8 @@ export default function App({ navigation }) {
       <Stack.Navigator>
         <Stack.Screen name="Home" component={main} options={{ title: 'Welcome' }} />
         <Stack.Screen name="Profile" component={profile} />
+        <Stack.Screen name="Login" component={login} />
+        <Stack.Screen name="Register" component={register} />
       </Stack.Navigator>
     </NavigationContainer>
   );
