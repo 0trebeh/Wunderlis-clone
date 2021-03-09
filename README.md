@@ -1,16 +1,16 @@
-# Node.js Express y MongoDB.
-CRUD Rest API para conectar App movil de ionic/angular.
+# Node.js Express y MongoDB. 🛠️
+* **CRUD Rest API to connect React Native mobile app.**
 
-## Instalar usando npm:
+## Install using npm 🔧:
 ```
 npm install
 ```
-## Instalar usando yarn:
+## Install using yarn 🔧:
 ```
 Yarn add
 ```
 
-### Ejecuta con:
+### 🚀 Run with: 
 ```
 node server.js
 ```
