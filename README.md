@@ -1,5 +1,8 @@
-# Wunderlis-clone
+# Listical ( Wunderlis-clone ) 📌
 Proyecto de moviles.
+
+# server 🚀
+* https://github.com/0trebeh/Wunderlis-clone/tree/backend
 
 ## Autores ✒️
 
