@@ -1,2 +1,7 @@
 # Wunderlis-clone
-App movil en React Native de gestión de listas. (Usando Expo).
+Proyecto de moviles.
+
+## Autores ✒️
+
+* **Clemente Castejon**  - [Clemente Castejon](https://github.com/ClementeAC)
+* **Heberto Urribarri**  - [Heberto Urribarri](https://github.com/0trebeh)
