@@ -1,10 +1,7 @@
 # Wunderlis-clone
 Proyecto de moviles.
 
-## Build
-web
----
-expo build:android
-expo build:ios
-expo build:web
----
+## Autores ✒️
+
+* **Clemente Castejon**  - [Clemente Castejon](https://github.com/ClementeAC)
+* **Heberto Urribarri**  - [Heberto Urribarri](https://github.com/0trebeh)
