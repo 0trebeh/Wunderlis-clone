@@ -1,2 +1,10 @@
 # Wunderlis-clone
-App movil en React Native de gestión de listas. (Usando Expo).
+Proyecto de moviles.
+
+## Build
+web
+---
+expo build:android
+expo build:ios
+expo build:web
+---
