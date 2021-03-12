@@ -1,4 +1,4 @@
-# Listical ( Wunderlis-clone ) 📌
+# Listical ( Wunderlist-clone ) 📌
 Proyecto de moviles.
 
 # server 🚀
