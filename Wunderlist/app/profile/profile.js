@@ -31,11 +31,15 @@ export default function profile({ navigation, route }) {
 import { Text, View, Image, Button, FlatList, SafeAreaView, Alert } from 'react-native';
 import styles from './profile.css';
 
-export default function profile({ navigation, route }) {
-    return(
-        <View>
-            <Text>Profile</Text>
-        </View>
-        
-    );
+export default class profile extends React.Component {
+
+    render () {
+      const { navigate, route } = this.props.navigation;
+      return(
+          <View>
+              <Text>Profile</Text>
+          </View>
+          
+      );
+    };
 };*/
