@@ -14,6 +14,6 @@ server.use(bodyParser.urlencoded({ extended: true }));
 
 //rutas
 server.use('/api/users', require('./routes/users'));
-server.use('/api/tasks', require('./routes/tasks'));
+server.use('/api/lists', require('./routes/lists'));
 
 module.exports = server;

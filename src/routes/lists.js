@@ -3,7 +3,7 @@ const router = Router();
 
 const { 
     
-} = require('../controllers/tasks.controllers');
+} = require('../controllers/lists.controllers');
 
 
 module.exports = router;

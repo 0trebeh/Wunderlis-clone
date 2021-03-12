@@ -3,7 +3,7 @@ const { mail } = require('../utils/mailer');
 const query = require('../utils/queries');
 
 
-const getUsers = async (req, res) => {
+const getUsers = async (req, res) => { 
   const client = await pool.connect();
   try{
     const response = await client.query(query.getUsers);
@@ -73,13 +73,12 @@ const updateUser = async (req, res) => {
   const client = await pool.connect();
   try{
     const id = parseInt(req.params.id);
-    const { username, email, password, avatar } = req.body;
+    const { username, email, password } = req.body;
 
     const response = await client.query(query.updateUser, [
         username,
         email,
         password,
-        avatar,
         id
     ]);
     res.status(200).json(response.rows);
