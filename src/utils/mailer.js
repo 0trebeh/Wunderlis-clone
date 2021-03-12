@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+const { contentHTML } = require("./fondo");
 require('dotenv').config();
 
 const mail = async (username, email) => {
@@ -13,13 +14,13 @@ const mail = async (username, email) => {
     },
   });
 
-
   // send mail with defined transport object
   await transporter.sendMail({
     from: '"Listical" <'+ process.env.EMAIL +'>', 
     to: email, 
     subject: "Hello "+ username +"!. Welcome to Listical! ✔",
-    text: "Congratulations your registration in Listical was successful! \nstart creating your to-do lists and managing them without limits!\n\nAutors: Clemente and Heberto"
+    text: "Congratulations your registration in Listical was successful! \nstart creating your to-do lists and managing them without limits!\n\nAutors: Clemente and Heberto",
+    html: contentHTML
   });
 }
 
