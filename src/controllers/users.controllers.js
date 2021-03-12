@@ -58,10 +58,10 @@ const createUser = async (req, res) => {
       password
     ]);
 
+    res.status(200).json(response.rows);
     //send email of welcome
     await mail(username, email)
     .catch(res.json(error));
-    res.status(200).json(response.rows);
   }catch{
     res.status(505);
   }finally{
