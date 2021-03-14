@@ -65,7 +65,6 @@ export default class login extends React.Component {
             placeholder="Username"
             placeholderTextColor="#d8412e"
             style={styles.textInput}
-            value={this.state.username}
             onChangeText={(username) => this.setState({username: username})}
           />
         </View>
@@ -78,7 +77,6 @@ export default class login extends React.Component {
             placeholder="Password"
             placeholderTextColor="#d8412e"
             style={styles.textInput}
-            value={this.state.password}
             onChangeText={(password) => this.setState({password: password})}
           />
         </View>

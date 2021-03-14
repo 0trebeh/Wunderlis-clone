@@ -1,12 +1,6 @@
-/*import React, { useState, useEffect } from 'react';
-import { Text, View, Image, Button, FlatList, SafeAreaView, Alert } from 'react-native';*/
-
-// JSON.parse(
-
-
 import React from 'react';
-import axios from 'axios';
-import { Text, View, Image, Button, FlatList, SafeAreaView, Alert } from 'react-native';
+import { Text, View, Image, Button, FlatList, SafeAreaView, Alert, TextInput } from 'react-native';
+import Icon from "@expo/vector-icons/AntDesign";
 import styles from './profile.css';
 
 export default class profile extends React.Component {
@@ -15,112 +9,49 @@ export default class profile extends React.Component {
     super(props);
 
     this.state = {
-      loading : false,
-      user: []
+      //loading : false,
+      username: '',
+      password: '',
+      email: '',
     }
   }
   
   componentDidMount(){
-    this.getElements();
+    this.getUser();
   };
 
-  getElements = async () => {
-    this.setState({ loading : true });
-    const res = await axios.get('https://listical.herokuapp.com/api/users/');
-    this.setState({ user: res.data, loading : false });
-    console.log(this.state.user);
-  }
+  getUser = () => {
+    this.setState({ 
+      username: JSON.parse(localStorage.getItem('user')).username,
+      email: JSON.parse(localStorage.getItem('user')).email,
+    }); 
+  };
 
   render () {
-    const { navigate } = this.props.navigation;
-
-    const Item = ({ username }) => (
-      <View style={styles.item}>
-        <View style={styles.itemtop}></View>
-        <Text style={styles.title}>{username}</Text>
-      </View>
-    );
-
-    const renderItem = ({ item }) => (
-      <Item username={item.username} />
-    );
-
-    if(this.state.loading){
-      return(
-        <View>
-          <Text>Loading...</Text>
-        </View>      
-      );
-    }
+    const { navigate, route } = this.props.navigation;
     return(
       <View>
-        <SafeAreaView style={styles.container}>
-          <View style={styles.end}>
-            <Button color="#000" title="add task" onPress={() =>
-              console.log('asignar elemento a la lista')
-              /*this.setState({
-                user: user.push({
-                  user_id: '1',
-                  username: 'Fourth Item',
-                })
-              })*/
-            }
-            />
-          </View>
-          <FlatList
-            data={this.state.user}
-            renderItem={renderItem}
-            keyExtractor={item => item.user_id.toString()}
+        <Text>{this.state.username}</Text>
+        <Text>{this.state.email}</Text>
+
+        <View>
+          <Icon name="user" color="#d8412e" size={24} />
+          <TextInput
+            placeholder="Username"
+            placeholderTextColor="#d8412e"
+            onChangeText={(username) => this.setState({username: username})}
           />
-        </SafeAreaView>
-      </View>      
+        </View>
+        <View>
+          <Icon name="exclamationcircleo" color="#d8412e" size={24} />
+          <TextInput
+          secureTextEntry
+            placeholder="Password"
+            placeholderTextColor="#d8412e"
+            onChangeText={(password) => this.setState({password: password})}
+          />
+        </View>
+      </View>   
     );
   };
 };
-
-
-
-
-/*
-export default function profile({ navigation, route }) {
-  const [count, setCount] = useState([]);
-  const [refresh, setRefresh] = useState(false);
-
-  // De forma similar a componentDidMount y componentDidUpdate
-  useEffect(() => {
-    // Actualiza el título del documento usando la API del navegador
-    document.title = count;
-  });
-
-  return (
-    <View>
-
-        <FlatList
-            data={count}
-        />
-
-        <Button onClick={() => setCount(count + 1)}>
-            Click me
-        </Button>
-    </View>
-  );
-}*/
-
-// de aqui pa riba es prueba
-
-/*import React from 'react';
-import { Text, View, Image, Button, FlatList, SafeAreaView, Alert } from 'react-native';
-import styles from './profile.css';
-
-export default class profile extends React.Component {
-
-    render () {
-      const { navigate, route } = this.props.navigation;
-      return(
-          <View>
-              <Text>Profile</Text>
-          </View>
-          
-      );
-    };
-};*/

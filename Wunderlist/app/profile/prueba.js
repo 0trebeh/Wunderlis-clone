@@ -1,98 +1,73 @@
-import React, {useState, useEffect, useMemo, useCallback, useRef} from 'react';
-import {View, FlatList, Text} from 'react-native';
-import {ListItem} from 'native-base';
-import {_} from 'lodash';
+import React from 'react';
+import axios from 'axios';
+import { Text, View, Image, Button, FlatList, SafeAreaView, Alert } from 'react-native';
+import styles from './profile.css';
 
-import generalStyles from '../../generalStyles';
+export default class prueba extends React.Component {
 
-const itemListing = [
-  {id: '1', name: 'Item!'},
-  {id: '2', name: 'Item@'},
-];
+  constructor(props){
+    super(props);
 
-const ItemList = props => {
-  const flatListRef = useRef(null);
-
-  const [limit] = useState(5);
-  const [page, setPage] = useState(1);
-  const [clientData, setClientData] = useState([]);
-  const [serverData, serverDataLoaded] = useState([]);
-  const [pending_process, setPending_process] = useState(true);
-  const [loadmore, setLoadmore] = useState(false);
-  const [refresh, setRefresh] = useState(false);
-
-  const ApiRequest = async thePage => {
-    await setTimeout(() => {}, 1500);
-    return itemList.slice((thePage - 1) * limit, thePage * limit);
-  };
-
-  const requestToServer = async thePage => {
-    let data = await ApiRequest(thePage);
-    console.log('data', data);
-    serverDataLoaded(data);
-  };
-
-  useEffect(() => {
-    console.log('requestToServer');
-    requestToServer(page);
-  }, []);
-
-  useEffect(() => {
-    console.log('obtained serverData', serverData);
-    if (serverData.length > 0) {
-      setRefresh(false);
-      setClientData([...clientData, ...serverData]);
-      setLoadmore(serverData.length == limit ? true : false);
-      setPending_process(false);
-    } else {
-      setLoadmore(false);
+    this.state = {
+      loading : false,
+      user: []
     }
-  }, [serverData]);
-
-  useEffect(() => {
-    console.log('load more with page', page);
-    if (serverData.length == limit || page == 1) {
-      setPending_process(true);
-      requestToServer(page);
-    }
-  }, [page]);
-
-  const handleLoadMore = () => {
-    console.log('loadmore', loadmore);
-    console.log('pending_process', pending_process);
-    if (loadmore && !pending_process) {
-      setPage(page + 1);
-    }
+  }
+  
+  componentDidMount(){
+    this.getElements();
   };
 
-  const onRefresh = () => {
-    setClientData([]);
-    setPage(1);
-    setRefresh(true);
-    setPending_process(false);
-  };
+  getElements = async () => {
+    this.setState({ loading : true });
+    const res = await axios.get('https://listical.herokuapp.com/api/users/');
+    this.setState({ user: res.data, loading : false });
+    console.log(this.state.user);
+  }
 
-  const renderRow = ({item}) => {
-    return (
-      <ListItem>
-        <Text style={{color: 'red'}}>{item.name}</Text>
-      </ListItem>
+  render () {
+    const { navigate } = this.props.navigation;
+
+    const Item = ({ username }) => (
+      <View style={styles.item}>
+        <View style={styles.itemtop}></View>
+        <Text style={styles.title}>{username}</Text>
+      </View>
+    );
+
+    const renderItem = ({ item }) => (
+      <Item username={item.username} />
+    );
+
+    if(this.state.loading){
+      return(
+        <View>
+          <Text>Loading...</Text>
+        </View>      
+      );
+    }
+    return(
+      <View>
+        <SafeAreaView style={styles.container}>
+          <View style={styles.end}>
+            <Button color="#000" title="add task" onPress={() =>
+              console.log('asignar elemento a la lista')
+              /*this.setState({
+                user: user.push({
+                  user_id: '1',
+                  username: 'Fourth Item',
+                })
+              })*/
+            }
+            />
+          </View>
+          <FlatList
+            data={this.state.user}
+            renderItem={renderItem}
+            keyExtractor={item => item.user_id.toString()}
+          />
+        </SafeAreaView>
+      </View>      
     );
   };
-
-  return (
-    <View style={[generalStyles.container, generalStyles.bg_white]}>
-      <FlatList
-        ref={flatListRef}
-        refreshing={refresh}
-        data={clientData}
-        renderItem={renderRow}
-        onEndReached={handleLoadMore}
-        onEndReachedThreshold={0.1}
-        onRefresh={() => onRefresh()}
-      />
-    </View>
-  );
 };
-
-export default ItemListing;

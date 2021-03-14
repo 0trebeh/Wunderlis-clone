@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import main from './app/main';
 import profile from './app/profile/profile';
+import prueba from './app/profile/prueba';
 import login from './app/login/login'
 import register from './app/register/register'
 import inbox from './app/inbox/inbox'
@@ -24,7 +25,8 @@ export default function App({ navigation }) {
         <Stack.Screen name="Login" component={login} />
         <Stack.Screen name="Register" component={register} />
         <Stack.Screen name="Inbox" component={inbox} />
+        <Stack.Screen name="prueba" component={prueba} />
       </Stack.Navigator>
     </NavigationContainer>
   );
-};
+}; 
