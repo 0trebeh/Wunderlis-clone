@@ -12,11 +12,9 @@ const styles = StyleSheet.create({
     text1: {
         marginTop:40,
         fontSize: 30,
-        fontFamily: "SemiBold",
         alignSelf: "center",
     },
     text2: {
-        fontFamily: "SemiBold",
         marginHorizontal: 55,
         textAlign: "center",
         marginVertical: 5,
@@ -47,12 +45,10 @@ const styles = StyleSheet.create({
     },
     textButton: {
         color: "white",
-        fontFamily: "SemiBold",
     },
     buttonNavigation: {
         alignSelf: "center",
         color: "#d8412e",
-        fontFamily: "SemiBold",
         paddingVertical: 30,
     }
 });

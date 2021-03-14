@@ -1,17 +1,50 @@
-import React from 'react';
-import { Text, View, StyleSheet,  TextInput, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect }from 'react';
+import { Text, View, StyleSheet,  TextInput, TouchableOpacity, FlatList, KeyboardAvoidingView, Platform } from 'react-native';
+import { Ionicons, MaterialIcons } from "@expo/vector-icons" 
 
 export default function Inbox() {
-    return(
-        <View style={styles.container}>
-            <View style={styles.Body}>
 
+    const [task, setTask] = useState([]);
+    const [newTask, setNewTask] = useState('')
+
+
+    async function addTask() {
+
+        setTask([...task, newTask])
+
+    }
+
+    return(
+        <KeyboardAvoidingView keyboardVerticalOffset={70} behavior="padding" style={{flex: 1}} enabled={Platform.OS === 'ios'}>
+            <View style={styles.container}>
+                <View style={styles.Body}>
+                    <FlatList style={styles.FlatList}
+                    data={task}
+                    keyExtractor={item => item.toString()}
+                    showsVerticalScrollIndicator = {false}
+                    renderItem={({ item }) => (
+                        <View style={styles.ContainerView}>
+                            <Text style={styles.TaskText}>{item}</Text>
+                            <TouchableOpacity>
+                                <MaterialIcons name="delete-forever" size={25} color="#f64c75"/>
+                            </TouchableOpacity>
+                        </View>
+                    )}
+                    />
+                </View>
+                <View style={styles.Form}>
+                    <TextInput style={styles.Input}
+                    placeholderTextColor="#999"
+                    placeholder="Add a new task"
+                    onChangeText= {text => setNewTask(text)}
+                    />
+                    <TouchableOpacity style={styles.Button} onPress={() => addTask()}>
+                        <Ionicons name="ios-add" size={25} color="#fff"/>
+                    </TouchableOpacity>
+
+                </View>
             </View>
-            <View style={styles.Form}>
-                <TextInput/>
-                <TouchableOpacity/>
-            </View>
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 
@@ -20,8 +53,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         paddingHorizontal: 20,
-        paddingVertical: 20,
-        marginTop: 20,
+        paddingVertical: 20
     },
     Body: {
         flex: 1,
@@ -35,6 +67,47 @@ const styles = StyleSheet.create({
         paddingTop: 13,
         borderTopWidth: 1,
         borderColor: '#eee',
-        backgroundColor: '#777'
+    },
+    Input: {
+        flex: 1,
+        height: 40,
+        backgroundColor: '#eee',
+        borderRadius: 4,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        borderWidth: 1,
+        borderColor: '#eee'
+    },
+    Button: {
+        height: 40,
+        width: 40,
+        justifyContent: 'center',
+        alignItems: "center",
+        backgroundColor: '#1c6cce',
+        borderRadius: 4,
+        marginLeft: 10
+    },
+    FlatList: {
+        flex: 1,
+        marginTop: 5
+    },
+    ContainerView: {
+        marginBottom: 15,
+        padding: 15,
+        borderRadius: 4,
+        backgroundColor: '#eee',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        borderWidth: 1,
+        borderColor: '#eee',
+        alignItems: "center",
+    },
+    TaskText: {
+        fontSize: 14,
+        color: "#333",
+        fontWeight: "bold",
+        marginTop: 4,
+        textAlign: "center"
     }
 })
