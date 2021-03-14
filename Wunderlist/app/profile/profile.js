@@ -51,31 +51,30 @@ export default class profile extends React.Component {
           <Text>Loading...</Text>
         </View>      
       );
-    }else{
-      return(
-        <View>
-          <SafeAreaView style={styles.container}>
-            <View style={styles.end}>
-              <Button color="#000" title="add task" onPress={() =>
-                console.log('asignar elemento a la lista')
-                /*this.setState({
-                  user: user.push({
-                    user_id: '1',
-                    username: 'Fourth Item',
-                  })
-                })*/
-              }
-              />
-            </View>
-            <FlatList
-              data={this.state.user}
-              renderItem={renderItem}
-              keyExtractor={item => item.user_id.toString()}
-            />
-          </SafeAreaView>
-        </View>      
-      );
     }
+    return(
+      <View>
+        <SafeAreaView style={styles.container}>
+          <View style={styles.end}>
+            <Button color="#000" title="add task" onPress={() =>
+              console.log('asignar elemento a la lista')
+              /*this.setState({
+                user: user.push({
+                  user_id: '1',
+                  username: 'Fourth Item',
+                })
+              })*/
+            }
+            />
+          </View>
+          <FlatList
+            data={this.state.user}
+            renderItem={renderItem}
+            keyExtractor={item => item.user_id.toString()}
+          />
+        </SafeAreaView>
+      </View>      
+    );
   };
 };
 
