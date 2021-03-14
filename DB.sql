@@ -13,6 +13,8 @@ create table tag (
 	descrition VARCHAR (500),
 	color VARCHAR (50),
 	priority integer
+// agregar user_ como foranea para saber a que user pertenece
+
 );
 
 create table list (
