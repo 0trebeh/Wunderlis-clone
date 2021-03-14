@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 
     img: {
       height: 200,
-      width: 200,
+      marginHorizontal: 10
     },
 
     //boton del medio
