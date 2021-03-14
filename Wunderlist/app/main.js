@@ -38,6 +38,7 @@ export default class main extends React.Component {
                 <View style={styles.end}>
                     <Button color="#000" title="Profile" onPress={() => navigate('Profile')}/>
                     <Button color="#000" title="Login" onPress={() => navigate('Login')}/>
+                    <Button color="#000" title="Inbox" onPress={() => navigate('Inbox')}/>
                 </View>
                 <Image source={{uri: 'https://picsum.photos/200/200'}} style={styles.img}/>
             
