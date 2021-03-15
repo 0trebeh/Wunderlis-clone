@@ -10,11 +10,14 @@ create table app_user (
 create table tag (
 	tag_id serial PRIMARY KEY,
 	name VARCHAR (60) NOT NULL,
-	descrition VARCHAR (500),
+	description VARCHAR (500),
 	color VARCHAR (50),
-	priority integer
-// agregar user_ como foranea para saber a que user pertenece
-
+	priority integer,
+    user_ integer NOT NULL,
+	FOREIGN KEY (user_)
+        REFERENCES app_user (user_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 create table list (
@@ -29,7 +32,7 @@ create table list (
 	time_alert TIMESTAMP,
 	completed boolean,
 	tag integer,
-	user_ integer,
+	user_ integer NOT NULL,
 	FOREIGN KEY (tag)
         REFERENCES tag (tag_id)
         ON DELETE CASCADE
