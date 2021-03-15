@@ -1,60 +1,243 @@
 const pool = require('../utils/dbconnection'); 
 const query = require('../utils/queries');
 
-    const getTags = async (req, res) => { 
-        const client = await pool.connect();
-        try{
-            const response = await client.query(query.getTags);
-            res.status(200).json(response.rows);
-        }catch{
-            res.status(505);
-        }finally{
-            client.release(true);
-        }
-    };
+const getTags = async (req, res) => { 
+    const client = await pool.connect();
+    try{
+        const id = parseInt(req.params.id);
+        const response = await client.query(query.getTags, [ id ]);
+        res.status(200).json(response.rows);
+    }catch{
+        res.status(505);
+    }finally{
+        client.release(true);
+    }
+};
     
-    const getTag = async (req, res) => { 
-        const client = await pool.connect();
-        try{
-            const response = await client.query(query.getTag);
-            res.status(200).json(response.rows);
-        }catch{
-            res.status(505);
-        }finally{
-            client.release(true);
-        }
-    };
+const getTag = async (req, res) => { 
+    const client = await pool.connect();
+    try{
+        const id = parseInt(req.params.id);
+        const response = await client.query(query.getTag, [ id ]);
+        res.status(200).json(response.rows);
+    }catch{
+        res.status(505);
+    }finally{
+        client.release(true);
+    }
+};
 
-    /*getLists,
-    getList,
+const getLists = async (req, res) => { 
+    const client = await pool.connect();
+    try{
+        const id = parseInt(req.params.id);
+        const response = await client.query(query.getLists, [ id ]);
+        res.status(200).json(response.rows);
+    }catch{
+        res.status(505);
+    }finally{
+        client.release(true);
+    }
+};
 
-    getTasks,
-    getTask,
+const getTasks = async (req, res) => { 
+    const client = await pool.connect();
+    try{
+        const id = parseInt(req.params.id);
+        const response = await client.query(query.getTasks, [ id ]);
+        res.status(200).json(response.rows);
+    }catch{
+        res.status(505);
+    }finally{
+        client.release(true);
+    }
+};
 
-    createTag,
-    createList,
-    createTask,
+const getTask = async (req, res) => { 
+    const client = await pool.connect();
+    try{
+        const id = parseInt(req.params.id);
+        const response = await client.query(query.getTask, [ id ]);
+        res.status(200).json(response.rows);
+    }catch{
+        res.status(505);
+    }finally{
+        client.release(true);
+    }
+};
 
-    updateTag,
-    updateList,
-    updateTask,
+const createTag = async (req, res) => {
+    const client = await pool.connect();
+    try{
+        const { name, description, color, priority } = req.body;
+        const response = await client.query(query.createTag, [
+            name, 
+            description, 
+            color, 
+            priority
+        ]);
+        res.status(200).json(response.rows);
+    }catch{
+        res.status(505);
+    }finally{
+        client.release(true);
+    }
+};
 
-    
-     
-    deleteTag,
-    deleteList,
-    deleteTask,*/
-    
-    
-    
-    
+const createList = async (req, res) => {
+    const client = await pool.connect();
+    try{
+        const { title, position, color, pinned, edited, created, user_ } = req.body;
+        const response = await client.query(query.createList, [
+            title, 
+            position, 
+            color, 
+            pinned, 
+            edited, 
+            created, 
+            user_
+        ]);
+        res.status(200).json(response.rows);
+    }catch{
+        res.status(505);
+    }finally{
+        client.release(true);
+    }
+};
 
+const createTask = async (req, res) => {
+    const client = await pool.connect();
+    try{
+        const { strikethrough, position, value, img, list } = req.body;
+        const response = await client.query(query.createTask, [
+            strikethrough, 
+            position, 
+            value, 
+            img, 
+            list
+        ]);
+        res.status(200).json(response.rows);
+    }catch{
+        res.status(505);
+    }finally{
+        client.release(true);
+    }
+};
+
+const updateTag = async (req, res) => {
+    const client = await pool.connect();
+    try{
+        const id = parseInt(req.params.id);
+        const { name, description, color, priority } = req.body;
+  
+        const response = await client.query(query.updateTag, [
+            name, 
+            description, 
+            color, 
+            priority,
+            id
+        ]);
+        res.status(200).json(response.rows);
+    }catch{
+        res.status(505);
+    }finally{
+        client.release(true);
+    }
+};
+
+const updateList = async (req, res) => {
+    const client = await pool.connect();
+    try{
+        const id = parseInt(req.params.id);
+        const { title, position, color, pinned, edited, 
+                time_limit, time_alert, completed, tag } = req.body;
+  
+        const response = await client.query(query.updateList, [
+            title, 
+            position, 
+            color, 
+            pinned, 
+            edited, 
+            time_limit, 
+            time_alert, 
+            completed, 
+            tag,
+            id
+        ]);
+        res.status(200).json(response.rows);
+    }catch{
+        res.status(505);
+    }finally{
+        client.release(true);
+    }
+};
+
+const updateTask = async (req, res) => {
+    const client = await pool.connect();
+    try{
+        const id = parseInt(req.params.id);
+        const { strikethrough, position, value, img, list } = req.body;
+  
+        const response = await client.query(query.updateTask, [
+            strikethrough, 
+            position, 
+            value, 
+            img, 
+            list,
+            id
+        ]);
+        res.status(200).json(response.rows);
+    }catch{
+        res.status(505);
+    }finally{
+        client.release(true);
+    }
+};
+
+const deleteTag = async (req, res) => { 
+    const client = await pool.connect();
+    try{
+        const id = parseInt(req.params.id);
+        await client.query(query.deleteTag, [ id ]);
+        res.status(200).json(`Tag deleted Successfully`);
+    }catch{
+        res.status(505);
+    }finally{
+        client.release(true);
+    }
+};
+
+const deleteList = async (req, res) => { 
+    const client = await pool.connect();
+    try{
+        const id = parseInt(req.params.id);
+        await client.query(query.deleteList, [ id ]);
+        res.status(200).json(`Tag deleted Successfully`);
+    }catch{
+        res.status(505);
+    }finally{
+        client.release(true);
+    }
+};
+
+const deleteTask = async (req, res) => { 
+    const client = await pool.connect();
+    try{
+        const id = parseInt(req.params.id);
+        await client.query(query.deleteTask, [ id ]);
+        res.status(200).json(`Tag deleted Successfully`);
+    }catch{
+        res.status(505);
+    }finally{
+        client.release(true);
+    }
+};
+ 
 module.exports = {
-    /*getTags,
+    getTags,
     getTag,
 
     getLists,
-    getList,
 
     getTasks,
     getTask,
@@ -67,9 +250,7 @@ module.exports = {
     updateList,
     updateTask,
 
-    
-     
     deleteTag,
     deleteList,
-    deleteTask,*/
+    deleteTask,
 };

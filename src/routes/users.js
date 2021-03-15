@@ -3,7 +3,6 @@ const router = Router();
 
 const { 
     getUsers, 
-    getUserById, 
     getLogin,
     createUser, 
     updateUser, 
@@ -11,7 +10,6 @@ const {
 } = require('../controllers/users.controllers');
 
 router.get('/', getUsers);
-router.get('/:id', getUserById);
 router.post('/login', getLogin);
 router.post('/', createUser);
 router.put('/:id', updateUser);

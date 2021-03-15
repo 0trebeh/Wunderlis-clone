@@ -15,19 +15,6 @@ const getUsers = async (req, res) => {
   }
 };
 
-const getUserById = async (req, res) => {
-  const client = await pool.connect();
-  try{
-    const id = parseInt(req.params.id);
-    const response = await client.query(query.getUserById, [id]);
-    res.status(200).json(response.rows);
-  }catch{
-    res.status(505);
-  }finally{
-    client.release(true);
-  }
-};
-
 const getLogin = async (req, res) => {
   const client = await pool.connect();
   try{
@@ -104,7 +91,6 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
   getUsers,
-  getUserById,
   getLogin,
   createUser,
   updateUser,
