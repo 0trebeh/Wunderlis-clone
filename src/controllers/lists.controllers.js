@@ -25,7 +25,7 @@ const query = require('../utils/queries');
         }
     };
 
-    getLists,
+    /*getLists,
     getList,
 
     getTasks,
@@ -43,14 +43,14 @@ const query = require('../utils/queries');
      
     deleteTag,
     deleteList,
-    deleteTask,
+    deleteTask,*/
     
     
     
     
 
 module.exports = {
-    getTags,
+    /*getTags,
     getTag,
 
     getLists,
@@ -71,5 +71,5 @@ module.exports = {
      
     deleteTag,
     deleteList,
-    deleteTask,
+    deleteTask,*/
 };
