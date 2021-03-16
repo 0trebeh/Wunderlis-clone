@@ -5,6 +5,30 @@ import { datetime, compare } from './utils/datetime';
 
 export default class main extends React.Component {
 
+    /*constructor(props){
+        super(props);
+    
+        this.state = {
+            loading : false,
+            DATA: []
+        }
+    }
+      
+    componentDidMount(){
+        this.getElements();
+    };
+
+    componentDidUpdate(){
+
+    }
+    
+    getElements = async () => {
+        this.setState({ loading : true });
+        const res = await axios.get('https://listical.herokuapp.com/api/tasks/1');
+        this.setState({ DATA: res.data, loading : false });
+        console.log(this.state.DATA);
+    }*/
+
     render () {
         const { navigate } = this.props.navigation;
         

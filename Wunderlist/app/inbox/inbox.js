@@ -14,29 +14,39 @@ import {
 
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 
-export default function Inbox() {
-  const [task, setTask] = useState([]);
-  const [newTask, setNewTask] = useState("");
+export default class Inbox extends React.Component {
 
-  async function addTask() {
-    if (newTask === "") {
+  constructor(props){
+    super(props);
+
+    this.state = {
+      loading : false,
+      task: [],
+      newTask: ""
+    }
+  }
+
+  addTask = () => {
+    if (this.state.newTask === "") {
       return;
     }
 
-    const search = task.filter((task) => task === newTask);
+    const task = this.state.task;
+    const search = task.filter((task) => task === this.state.newTask);
 
     if (search.length !== 0) {
       Alert.alert("Duplicate task", "Task already exists");
       return;
     }
 
-    setTask([...task, newTask]);
-    setNewTask("");
+    const newTask = this.state.newTask;
+    this.setState({ task: task.push({task_id : 1, value : newTask}) , newTask: "" });
+    console.log(this.state.task);
 
     Keyboard.dismiss();
   }
 
-  async function removeTask(item) {
+  removeTask = (item) => {
     Alert.alert(
       "Delete task",
       "Are you sure you want to delete this task?",
@@ -50,7 +60,7 @@ export default function Inbox() {
         },
         {
           text: "Delete",
-          onPress: () => setTask(task.filter((tasks) => tasks !== item)),
+          onPress: () => this.state.task.filter((tasks) => tasks !== item),
         },
       ],
       {
@@ -59,7 +69,8 @@ export default function Inbox() {
     );
   }
 
-  useEffect(() => {
+  render(){
+  /*useEffect(() => {
     async function loadData() {
       const task = JSON.parse(localStorage.getItem("task"));
     }
@@ -71,7 +82,7 @@ export default function Inbox() {
       localStorage.setItem("task", JSON.stringify(task));
     }
     savedData();
-  }, [task]);
+  }, [task]);*/
 
   return (
     <KeyboardAvoidingView
@@ -80,12 +91,15 @@ export default function Inbox() {
       style={{ flex: 1 }}
       enabled={Platform.OS === "ios"}
     >
+      <Text>
+       {this.state.newTask} 
+      </Text>
       <View style={styles.container}>
         <View style={styles.Body}>
           <FlatList
             style={styles.FlatList}
-            data={task}
-            keyExtractor={(item) => item.toString()} //item.id
+            data={this.state.task}
+            keyExtractor={(item) => item.task_id.toString()} //item.id
             showsVerticalScrollIndicator={false}
             renderItem={({ item }) => (
               <View
@@ -102,7 +116,7 @@ export default function Inbox() {
                   alignItems: "center",
                 }}
               >
-                <Text style={styles.TaskText}>{item}</Text>
+                <Text style={styles.TaskText}>{item.value}</Text>
                 <TouchableOpacity onPress={() => removeTask(item)}>
                   <MaterialIcons
                     name="delete-forever"
@@ -119,16 +133,16 @@ export default function Inbox() {
             style={styles.Input}
             placeholderTextColor="#999"
             placeholder="Add a new task"
-            onChangeText={(text) => setNewTask(text)}
-            value={newTask}
+            onChangeText={(text) => this.setState({ newTask: text})}
           />
-          <TouchableOpacity style={styles.Button} onPress={() => addTask()}>
+          <TouchableOpacity style={styles.Button} onPress={() => this.addTask()}>
             <Ionicons name="ios-add" size={25} color="#fff" />
           </TouchableOpacity>
         </View>
       </View>
     </KeyboardAvoidingView>
   );
+}
 }
 
 const styles = StyleSheet.create({
