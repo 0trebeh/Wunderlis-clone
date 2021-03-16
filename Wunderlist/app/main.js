@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, Image, Button, FlatList, SafeAreaView, Alert } from 'react-native';
 import styles from './main.css';
+import { datetime, compare } from './utils/datetime';
 
 export default class main extends React.Component {
 
@@ -35,6 +36,8 @@ export default class main extends React.Component {
 
         return(
             <View style={styles.container}>
+                <Text> { datetime() } </Text>
+                <Text> { compare(datetime(), "2021-03-15T23:37:14.000Z") } </Text>
                 <View style={styles.end}>
                     <Button color="#000" title="Profile" onPress={() => navigate('Profile')}/>
                     <Button color="#000" title="Login" onPress={() => navigate('Login')}/>
