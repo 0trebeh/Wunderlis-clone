@@ -1,8 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, Image, Button, FlatList, SafeAreaView, Alert } from 'react-native';
 import styles from './main.css';
-
+import { datetime, compare } from './utils/datetime';
+ 
 export default class main extends React.Component {
+
+    /*constructor(props){
+        super(props);
+    
+        this.state = {
+            loading : false,
+            DATA: []
+        }
+    }
+      
+    componentDidMount(){
+        this.getElements();
+    };
+
+    componentDidUpdate(){
+
+    }
+    
+    getElements = async () => {
+        this.setState({ loading : true });
+        const res = await axios.get('https://listical.herokuapp.com/api/tasks/1');
+        this.setState({ DATA: res.data, loading : false });
+        console.log(this.state.DATA);
+    }*/
 
     render () {
         const { navigate } = this.props.navigation;
@@ -35,11 +60,14 @@ export default class main extends React.Component {
 
         return(
             <View style={styles.container}>
+                <Text> { datetime() } </Text>
+                <Text> { compare(datetime(), "2021-03-15T23:37:14.000Z") } </Text>
                 <View style={styles.end}>
                     <Button color="#000" title="Profile" onPress={() => navigate('Profile')}/>
                     <Button color="#000" title="Login" onPress={() => navigate('Login')}/>
                     <Button color="#000" title="Inbox" onPress={() => navigate('Inbox')}/>
                     <Button color="#000" title="prueba" onPress={() => navigate('prueba')}/>
+                    <Button color="#000" title="prueba2" onPress={() => navigate('prueba2')}/>
                     <Button color="#000" title="tags" onPress={() => navigate('tags')}/>
                 </View>
                 <Image source={{uri: 'https://picsum.photos/200/200'}} style={styles.img}/>
