@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, Image, Button, FlatList, SafeAreaView, Alert } from 'react-native';
 import styles from './main.css';
 import { datetime, compare } from './utils/datetime';
-
+ 
 export default class main extends React.Component {
 
     /*constructor(props){

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
+import { 
   Text,
   View,
   StyleSheet,
@@ -14,39 +14,29 @@ import {
 
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 
-export default class Inbox extends React.Component {
+export default function Inbox() {
+  const [task, setTask] = useState([]);
+  const [newTask, setNewTask] = useState("");
 
-  constructor(props){
-    super(props);
-
-    this.state = {
-      loading : false,
-      task: [],
-      newTask: ""
-    }
-  }
-
-  addTask = () => {
-    if (this.state.newTask === "") {
+  async function addTask() {
+    if (newTask === "") {
       return;
     }
 
-    const task = this.state.task;
-    const search = task.filter((task) => task === this.state.newTask);
+    const search = task.filter((task) => task === newTask);
 
     if (search.length !== 0) {
       Alert.alert("Duplicate task", "Task already exists");
       return;
     }
 
-    const newTask = this.state.newTask;
-    this.setState({ task: task.push({task_id : 1, value : newTask}) , newTask: "" });
-    console.log(this.state.task);
+    setTask([...task, newTask]);
+    setNewTask("");
 
     Keyboard.dismiss();
   }
 
-  removeTask = (item) => {
+  async function removeTask(item) {
     Alert.alert(
       "Delete task",
       "Are you sure you want to delete this task?",
@@ -60,7 +50,7 @@ export default class Inbox extends React.Component {
         },
         {
           text: "Delete",
-          onPress: () => this.state.task.filter((tasks) => tasks !== item),
+          onPress: () => setTask(task.filter((tasks) => tasks !== item)),
         },
       ],
       {
@@ -69,17 +59,20 @@ export default class Inbox extends React.Component {
     );
   }
 
-  render(){
   /*useEffect(() => {
     async function loadData() {
-      const task = JSON.parse(localStorage.getItem("task"));
+      const task = await AsyncStorage.getItem("task");
+
+      if (task) {
+        setTask(JSON.parse(task));
+      }
     }
     loadData();
   }, []);
 
   useEffect(() => {
     async function savedData() {
-      localStorage.setItem("task", JSON.stringify(task));
+      AsyncStorage.setItem("task", JSON.stringify(task));
     }
     savedData();
   }, [task]);*/
@@ -91,32 +84,16 @@ export default class Inbox extends React.Component {
       style={{ flex: 1 }}
       enabled={Platform.OS === "ios"}
     >
-      <Text>
-       {this.state.newTask} 
-      </Text>
       <View style={styles.container}>
         <View style={styles.Body}>
           <FlatList
             style={styles.FlatList}
-            data={this.state.task}
-            keyExtractor={(item) => item.task_id.toString()} //item.id
+            data={task}
+            keyExtractor={(item) => item.toString()}
             showsVerticalScrollIndicator={false}
             renderItem={({ item }) => (
-              <View
-                style={{
-                  marginBottom: 15,
-                  padding: 15,
-                  borderRadius: 4,
-                  backgroundColor: "#eee", // item.color
-                  borderColor: "#eee", // item.color
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  borderWidth: 1,
-                  alignItems: "center",
-                }}
-              >
-                <Text style={styles.TaskText}>{item.value}</Text>
+              <View style={styles.ContainerView}>
+                <Text style={styles.TaskText}>{item}</Text>
                 <TouchableOpacity onPress={() => removeTask(item)}>
                   <MaterialIcons
                     name="delete-forever"
@@ -133,16 +110,16 @@ export default class Inbox extends React.Component {
             style={styles.Input}
             placeholderTextColor="#999"
             placeholder="Add a new task"
-            onChangeText={(text) => this.setState({ newTask: text})}
+            onChangeText={(text) => setNewTask(text)}
+            value={newTask}
           />
-          <TouchableOpacity style={styles.Button} onPress={() => this.addTask()}>
+          <TouchableOpacity style={styles.Button} onPress={() => addTask()}>
             <Ionicons name="ios-add" size={25} color="#fff" />
           </TouchableOpacity>
         </View>
       </View>
     </KeyboardAvoidingView>
   );
-}
 }
 
 const styles = StyleSheet.create({
@@ -193,11 +170,11 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 4,
     backgroundColor: "#eee",
-    borderColor: "#eee",
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     borderWidth: 1,
+    borderColor: "#eee",
     alignItems: "center",
   },
   TaskText: {
