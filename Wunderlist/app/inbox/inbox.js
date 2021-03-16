@@ -12,7 +12,6 @@ import {
   Alert,
 } from "react-native";
 
-import { AsyncStorage } from "@react-native-community/async-storage";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 
 export default function Inbox() {
@@ -62,18 +61,14 @@ export default function Inbox() {
 
   useEffect(() => {
     async function loadData() {
-      const task = await AsyncStorage.getItem("task");
-
-      if (task) {
-        setTask(JSON.parse(task));
-      }
+      const task = JSON.parse(localStorage.getItem("task"));
     }
     loadData();
   }, []);
 
   useEffect(() => {
     async function savedData() {
-      AsyncStorage.setItem("task", JSON.stringify(task));
+     localStorage.setItem("task", JSON.stringify(task));
     }
     savedData();
   }, [task]);
@@ -90,10 +85,21 @@ export default function Inbox() {
           <FlatList
             style={styles.FlatList}
             data={task}
-            keyExtractor={(item) => item.toString()}
+            keyExtractor={(item) => item.toString()} //item.id
             showsVerticalScrollIndicator={false}
             renderItem={({ item }) => (
-              <View style={styles.ContainerView}>
+              <View style={{
+                marginBottom: 15,
+                padding: 15,
+                borderRadius: 4,
+                backgroundColor: "#eee",// item.color
+                borderColor: "#eee", // item.color
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                borderWidth: 1,
+                alignItems: "center",
+              }}>
                 <Text style={styles.TaskText}>{item}</Text>
                 <TouchableOpacity onPress={() => removeTask(item)}>
                   <MaterialIcons
@@ -171,11 +177,11 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 4,
     backgroundColor: "#eee",
+    borderColor: "#eee",
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     borderWidth: 1,
-    borderColor: "#eee",
     alignItems: "center",
   },
   TaskText: {
