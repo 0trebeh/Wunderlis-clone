@@ -9,6 +9,7 @@ import {
   Platform,
   Keyboard,
   Alert,
+  SearchBar,
 } from "react-native";
 import DraggableFlatList from "react-native-draggable-flatlist";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
@@ -102,27 +103,10 @@ export default function Inbox() {
         <View style={styles.Body}>
           <DraggableFlatList
             data={task}
+            index={task.index}
             renderItem={renderItem}
             keyExtractor={(item, index) => index.toString()}
             onDragEnd={({ data }) => setTask({ data })}
-          />
-          <FlatList
-            style={styles.FlatList}
-            data={task}
-            keyExtractor={(item) => item.toString()}
-            showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => (
-              <View style={styles.ContainerView}>
-                <Text style={styles.TaskText}>{item}</Text>
-                <TouchableOpacity onPress={() => removeTask(item)}>
-                  <MaterialIcons
-                    name="delete-forever"
-                    size={25}
-                    color="#f64c75"
-                  />
-                </TouchableOpacity>
-              </View>
-            )}
           />
         </View>
         <View style={styles.Form}>
