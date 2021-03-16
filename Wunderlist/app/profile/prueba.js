@@ -20,23 +20,24 @@ export default class prueba extends React.Component {
 
   getElements = async () => {
     this.setState({ loading : true });
-    const res = await axios.get('https://listical.herokuapp.com/api/users/');
+    const res = await axios.get('https://listical.herokuapp.com/api/tasks/1');
     this.setState({ user: res.data, loading : false });
     console.log(this.state.user);
   }
 
   render () {
     const { navigate } = this.props.navigation;
+    const user = this.state.user;
 
-    const Item = ({ username }) => (
+    const Item = ({ value }) => (
       <View style={styles.item}>
         <View style={styles.itemtop}></View>
-        <Text style={styles.title}>{username}</Text>
+        <Text style={styles.title}>{value}</Text>
       </View>
     );
 
     const renderItem = ({ item }) => (
-      <Item username={item.username} />
+      <Item value={item.value} />
     );
 
     if(this.state.loading){
@@ -62,9 +63,9 @@ export default class prueba extends React.Component {
             />
           </View>
           <FlatList
-            data={this.state.user}
+            data={user}
             renderItem={renderItem}
-            keyExtractor={item => item.user_id.toString()}
+            keyExtractor={item => item.task_id.toString()}
           />
         </SafeAreaView>
       </View>      
