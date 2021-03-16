@@ -69,12 +69,13 @@ const getTask = async (req, res) => {
 const createTag = async (req, res) => {
     const client = await pool.connect();
     try{
-        const { name, description, color, priority } = req.body;
+        const { name, description, color, priority, user_id } = req.body;
         const response = await client.query(query.createTag, [
             name, 
             description, 
             color, 
-            priority
+            priority,
+            user_id
         ]);
         res.status(200).json(response.rows);
     }catch{
@@ -87,15 +88,14 @@ const createTag = async (req, res) => {
 const createList = async (req, res) => {
     const client = await pool.connect();
     try{
-        const { title, position, color, pinned, edited, created, user_ } = req.body;
+        const { title, position, color, edited, created, user_id } = req.body;
         const response = await client.query(query.createList, [
             title, 
             position, 
             color, 
-            pinned, 
             edited, 
             created, 
-            user_
+            user_id
         ]);
         res.status(200).json(response.rows);
     }catch{
@@ -108,12 +108,15 @@ const createList = async (req, res) => {
 const createTask = async (req, res) => {
     const client = await pool.connect();
     try{
-        const { strikethrough, position, value, img, list } = req.body;
+        const { value, img, position_list, position_inbox, created, edited, tag, list } = req.body;
         const response = await client.query(query.createTask, [
-            strikethrough, 
-            position, 
             value, 
             img, 
+            position_list, 
+            position_inbox, 
+            created, 
+            edited, 
+            tag, 
             list
         ]);
         res.status(200).json(response.rows);
@@ -149,19 +152,14 @@ const updateList = async (req, res) => {
     const client = await pool.connect();
     try{
         const id = parseInt(req.params.id);
-        const { title, position, color, pinned, edited, 
-                time_limit, time_alert, completed, tag } = req.body;
+        const { title, position, color, edited, completed } = req.body;
   
         const response = await client.query(query.updateList, [
             title, 
             position, 
             color, 
-            pinned, 
             edited, 
-            time_limit, 
-            time_alert, 
-            completed, 
-            tag,
+            completed,
             id
         ]);
         res.status(200).json(response.rows);
@@ -176,13 +174,18 @@ const updateTask = async (req, res) => {
     const client = await pool.connect();
     try{
         const id = parseInt(req.params.id);
-        const { strikethrough, position, value, img, list } = req.body;
+        const { value, img, strikethrough, position_list, position_inbox, edited, time_limit, time_alert, tag, list } = req.body;
   
         const response = await client.query(query.updateTask, [
-            strikethrough, 
-            position, 
             value, 
             img, 
+            strikethrough, 
+            position_list, 
+            position_inbox, 
+            edited, 
+            time_limit, 
+            time_alert, 
+            tag, 
             list,
             id
         ]);
