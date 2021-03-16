@@ -37,7 +37,7 @@ export default class prueba extends React.Component {
     );
 
     const renderItem = ({ item }) => (
-      <Item value={item.value} />
+      <Item value={item.value} /> 
     );
 
     if(this.state.loading){
