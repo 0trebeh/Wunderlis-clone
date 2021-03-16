@@ -10,13 +10,38 @@ import {
   Keyboard,
   Alert,
 } from "react-native";
-
+import DraggableFlatList from "react-native-draggable-flatlist";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import styles from "./inbox.css";
 
 export default function Inbox() {
   const [task, setTask] = useState([]);
   const [newTask, setNewTask] = useState("");
+
+  const renderItem = ({ item, index, drag, isActive }) => (
+    <TouchableOpacity onLongPress={drag}>
+      <Text>{item.label}</Text>
+      <View
+        style={{
+          marginBottom: 15,
+          padding: 15,
+          borderRadius: 4,
+          backgroundColor: "#eee", // item.color
+          borderColor: "#eee", // item.color
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          borderWidth: 1,
+          alignItems: "center",
+        }}
+      >
+        <Text style={styles.TaskText}>{item}</Text>
+        <TouchableOpacity onPress={() => removeTask(item)}>
+          <MaterialIcons name="delete-forever" size={25} color="#f64c75" />
+        </TouchableOpacity>
+      </View>
+    </TouchableOpacity>
+  );
 
   async function addTask() {
     if (newTask === "") {
@@ -82,6 +107,12 @@ export default function Inbox() {
     >
       <View style={styles.container}>
         <View style={styles.Body}>
+          <DraggableFlatList
+            data={task}
+            renderItem={renderItem}
+            keyExtractor={(item, index) => index.toString()}
+            onDragEnd={({ data }) => setTask({ data })}
+          />
           <FlatList
             style={styles.FlatList}
             data={task}
