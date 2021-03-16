@@ -60,11 +60,18 @@ export default class prueba2 extends React.Component {
 
     this.setState({ search: char });
     const searchState = this.state.search;
-
     const task = this.state.task;
-    const search = task.filter(function(res) { 
-        return res.value.toLowerCase().indexOf(searchState.toLowerCase()) > -1;
-    });
+    let search = [];
+
+    if( searchState.length !== 0){
+        search = task.filter(function(res) { 
+            return res.value.toLowerCase().indexOf(searchState.toLowerCase()) > -1;
+        });
+    } else {
+        search = task.filter(function(res) { 
+            return res.value.toLowerCase().indexOf(char.toLowerCase()) > -1;
+        });
+    }
 
     if (search.length !== 0) {
         console.log(search);
