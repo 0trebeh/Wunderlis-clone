@@ -22,18 +22,7 @@ export default function Inbox() {
     <TouchableOpacity onLongPress={drag}>
       <Text>{item.label}</Text>
       <View
-        style={{
-          marginBottom: 15,
-          padding: 15,
-          borderRadius: 4,
-          backgroundColor: "#eee", // item.color
-          borderColor: "#eee", // item.color
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          borderWidth: 1,
-          alignItems: "center",
-        }}
+        style={styles.ContainerView}
       >
         <Text style={styles.TaskText}>{item}</Text>
         <TouchableOpacity onPress={() => removeTask(item)}>
