@@ -117,7 +117,7 @@ export default function Inbox() {
             index={task.index}
             renderItem={renderItem}
             keyExtractor={(item, index) => index.toString()}
-            onDragEnd={({ data }) => setTask({ data })}
+            onDragEnd={() => setTask(...task, newTask)} //Aqui es q se borran
           />
         </View>
         <View style={styles.Form}>
