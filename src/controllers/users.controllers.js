@@ -25,7 +25,8 @@ const getLogin = async (req, res) => {
     ]);
 
     if(typeof response.rows[0] === 'undefined'){
-      res.status(404).json([{
+      res.status(200).json([{
+        status: 200,
         messageError: "User not fount"
       }]);
     } else{
