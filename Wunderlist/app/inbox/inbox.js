@@ -93,8 +93,8 @@ export default function Inbox() {
 
   async function remove(item) {
     const id = item.task_id;
-    await axios.delete("https://listical.herokuapp.com/api/task/" + id.toString());
     setTask(task.filter((tasks) => tasks !== item));
+    await axios.delete("https://listical.herokuapp.com/api/task/" + id.toString());
   }
 
   const renderItem = ({ item, index, drag, isActive }) => (
