@@ -11,38 +11,30 @@ import {
   Keyboard,
   Alert,
   SearchBar,
+  ActivityIndicator,
 } from "react-native";
 import DraggableFlatList from "react-native-draggable-flatlist";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import styles from "./inbox.css";
 
 export default function Inbox() {
-  //const [task, setTask] = useState([]);
-  var task = [];
+  const [loading, setLoading] = useState(false);
+  const [task, setTask] = useState([]);
   const [newTask, setNewTask] = useState("");
 
-  async function first() {
-    
-    const res = await axios.get("https://listical.herokuapp.com/api/inbox/1");
-    task = res.data;
-    console.log(res.data);
-    console.log(task);
-  }
-  first();
-
-  const renderItem = ({ item, index, drag, isActive }) => (
-    <TouchableOpacity onLongPress={drag}>
-      <Text>{item.value}</Text>
-      <View
-        style={styles.ContainerView}
-      >
-        <Text style={styles.TaskText}>{item.value}</Text>
-        <TouchableOpacity onPress={() => removeTask(item)}>
-          <MaterialIcons name="delete-forever" size={25} color="#f64c75" />
-        </TouchableOpacity>
-      </View>
-    </TouchableOpacity>
-  );
+  useEffect(() => {
+    async function loadData() {
+      setLoading(true);
+      const res = await axios.get("https://listical.herokuapp.com/api/inbox/1");
+      const task = res.data;
+      console.log(task);
+      if (task) {
+        setTask(task);
+      }
+      setLoading(false);
+    }
+    loadData();
+  }, []);
 
   async function addTask() {
     if (newTask === "") {
@@ -56,8 +48,7 @@ export default function Inbox() {
       return;
     }
 
-    //setTask([...task, newTask]);
-    task = task.push(newTask);
+    setTask([...task, newTask]);
     setNewTask("");
 
     Keyboard.dismiss();
@@ -77,7 +68,7 @@ export default function Inbox() {
         },
         {
           text: "Delete",
-          onPress: () => task = task.filter((tasks) => tasks !== item),
+          onPress: () => setTask(task.filter((tasks) => tasks !== item)),
         },
       ],
       {
@@ -86,6 +77,33 @@ export default function Inbox() {
     );
   }
 
+  const renderItem = ({ item, index, drag, isActive }) => (
+    <TouchableOpacity onLongPress={drag}>
+      <Text>{item.value}</Text>
+      <View
+        style={styles.ContainerView}
+      >
+        <Text style={styles.TaskText}>{item.value}</Text>
+        <TouchableOpacity onPress={() => removeTask(item)}>
+          <MaterialIcons name="delete-forever" size={25} color="#f64c75" />
+        </TouchableOpacity>
+      </View>
+    </TouchableOpacity>
+  );
+
+  if (loading) {
+    return (
+      <View
+        style={{
+          paddingVertical: 20,
+          borderTopWidth: 1,
+          borderColor: "#CED0CE",
+        }}
+      >
+        <ActivityIndicator animating size="small" />
+      </View>
+    );
+  }
   return (
     <KeyboardAvoidingView
       keyboardVerticalOffset={70}
