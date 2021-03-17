@@ -1,7 +1,6 @@
 module.exports = {
     //Querys user
     getUsers:'SELECT * FROM app_user ORDER BY user_id ASC',
-    getUserById: 'SELECT * FROM app_user WHERE user_id = $1',
     getLogin: 'SELECT * FROM app_user WHERE username = $1 AND password = $2',
     createUser: 'INSERT INTO app_user (username, email, password) VALUES ($1, $2, $3) RETURNING *',
     updateUser: 'UPDATE app_user SET username = $1, email = $2, password = $3 WHERE user_id = $4 RETURNING *',
@@ -21,6 +20,7 @@ module.exports = {
     deleteList: 'DELETE list WHERE list_id = $1',
     
     //task
+    getImbox: 'SELECT title, value, list FROM list JOIN task ON task.list = list.list_id AND list.user_id = $1',
     getTasks: 'SELECT * FROM task WHERE list = $1',
     getTask: 'SELECT * FROM task WHERE task_id = $1',
     createTask: 'INSERT INTO task (value, img, position_list, position_inbox, created, edited, tag, list) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',

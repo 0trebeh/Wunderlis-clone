@@ -40,6 +40,19 @@ const getLists = async (req, res) => {
     }
 };
 
+const getImbox = async (req, res) => { 
+    const client = await pool.connect();
+    try{
+        const id = parseInt(req.params.id);
+        const response = await client.query(query.getImbox, [ id ]);
+        res.status(200).json(response.rows);
+    }catch{
+        res.status(505);
+    }finally{
+        client.release(true);
+    }
+};
+
 const getTasks = async (req, res) => { 
     const client = await pool.connect();
     try{
@@ -242,6 +255,7 @@ module.exports = {
 
     getLists,
 
+    getImbox,
     getTasks,
     getTask,
 
