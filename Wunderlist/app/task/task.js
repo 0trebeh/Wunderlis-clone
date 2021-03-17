@@ -5,4 +5,10 @@ import styles from './task.css';
 export default class task extends React.Component {
 
     
+    
+    /* <Image
+          source={{ uri: "https://picsum.photos/200/200" }}
+          style={styles.img}
+        /> */
+    
 }

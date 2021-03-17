@@ -38,7 +38,7 @@ export default class login extends React.Component {
           Alert.alert("User not found");
           return;
         } else {
-          //localStorage.setItem("user", JSON.stringify(res.data[0]));
+          localStorage.setItem("user", JSON.stringify(res.data[0]));
           console.log(res);
           console.log(res.data[0]);
           navigate("Home");

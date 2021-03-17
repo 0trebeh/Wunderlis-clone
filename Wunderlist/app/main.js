@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   Text,
   View,
@@ -8,6 +9,7 @@ import {
   SafeAreaView,
   Alert,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import styles from "./main.css";
 import { datetime, compare } from "./utils/datetime";
@@ -15,12 +17,12 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { color } from "react-native-reanimated";
 
 export default class main extends React.Component {
-  /*constructor(props){
+  constructor(props){
         super(props);
     
         this.state = {
             loading : false,
-            DATA: []
+            Lists : [],
         }
     }
       
@@ -34,10 +36,10 @@ export default class main extends React.Component {
     
     getElements = async () => {
         this.setState({ loading : true });
-        const res = await axios.get('https://listical.herokuapp.com/api/tasks/1');
-        this.setState({ DATA: res.data, loading : false });
-        console.log(this.state.DATA);
-    }*/
+        const res = await axios.get('https://listical.herokuapp.com/api/lists/' + '1');
+        this.setState({ Lists: res.data, loading : false });
+        console.log(this.state.Lists);
+    }
 
   render() {
     const { navigate } = this.props.navigation;
@@ -53,28 +55,6 @@ export default class main extends React.Component {
       },
     ];
 
-    const DATA = [
-      {
-        id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-        title: "First Item",
-      },
-      {
-        id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-        title: "Second Item",
-      },
-      {
-        id: "58694a0f-3da1-471f-bd96-145571e29d72",
-        title: "Third Item",
-      },
-    ];
-
-    const Item = ({ title }) => (
-      <View style={styles.item}>
-        <View style={styles.itemtop}></View>
-        <Text style={styles.title}>{title}</Text>
-      </View>
-    );
-
     const renderLists = ({ item }) => (
       <TouchableOpacity onPress={() => navigate("Inbox")}>
         <View
@@ -86,9 +66,11 @@ export default class main extends React.Component {
             borderColor: "#eee", 
             borderWidth: 10,
             alignItems: "center",
+            flexDirection: "row",
           }}
         >
           <MaterialIcons
+            style={{ marginHorizontal: 5 }}
             name="format-list-bulleted"
             size={20}
             color={item.color}
@@ -98,8 +80,19 @@ export default class main extends React.Component {
       </TouchableOpacity>
     );
 
-    const renderItem = ({ item }) => <Item title={item.title} />;
-
+    if (this.state.loading) {
+      return (
+        <View
+          style={{
+            paddingVertical: 20,
+            borderTopWidth: 1,
+            borderColor: "#CED0CE",
+          }}
+        >
+          <ActivityIndicator animating size="small" />
+        </View>
+      );
+    }
     return (
       <View style={styles.container}>
         <Text> {datetime()} </Text>
@@ -137,42 +130,6 @@ export default class main extends React.Component {
             onPress={() => navigate("Login")}
           />
           <Button color="#000" title="tags" onPress={() => navigate("tags")} />
-        </View>
-        
-
-        <View style={styles.center}>
-          <Button color="#000" title="center button" />
-        </View>
-
-        <SafeAreaView style={styles.container}>
-          <View style={styles.end}>
-            <Button
-              color="#000"
-              title="add task"
-              onPress={() =>
-                DATA.push({
-                  id: "1",
-                  title: "Fourth Item",
-                })
-              }
-            />
-          </View>
-          <FlatList
-            data={DATA}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-          />
-        </SafeAreaView>
-
-        <View style={styles.fixToText}>
-          <Button
-            title="Left button"
-            onPress={() => Alert.alert("Left button pressed")}
-          />
-          <Button
-            title="Right button"
-            onPress={() => console.log("Right button pressed")}
-          />
         </View>
       </View>
     );
