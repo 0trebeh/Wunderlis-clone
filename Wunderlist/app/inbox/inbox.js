@@ -25,7 +25,7 @@ export default function Inbox() {
   useEffect(() => {
     async function loadData() {
       setLoading(true);
-      const res = await axios.get("https://listical.herokuapp.com/api/inbox/1");
+      const res = await axios.get("https://listical.herokuapp.com/api/inbox/" + "1");
       const task = res.data;
       console.log(task);
       if (task) {
@@ -48,10 +48,22 @@ export default function Inbox() {
       return;
     }
 
-    setTask([...task, newTask]);
-    setNewTask("");
-
+    const Task = {
+      value: newTask,
+      img: null,
+      position_list: null,
+      position_inbox: null,
+      created: null,
+      edited: null,
+      tag: null,
+      list: 1
+    }
     Keyboard.dismiss();
+    await axios.post("https://listical.herokuapp.com/api/task", Task);
+    const res = await axios.get("https://listical.herokuapp.com/api/inbox/" + "1");
+    setTask( res.data );
+    setNewTask("");
+      
   }
 
   async function removeTask(item) {
@@ -68,7 +80,9 @@ export default function Inbox() {
         },
         {
           text: "Delete",
-          onPress: () => setTask(task.filter((tasks) => tasks !== item)),
+          onPress: () => {
+            remove(item);
+          },
         },
       ],
       {
@@ -77,9 +91,14 @@ export default function Inbox() {
     );
   }
 
+  async function remove(item) {
+    const id = item.task_id;
+    await axios.get("https://listical.herokuapp.com/api/inbox/" + id.toString());
+    setTask(task.filter((tasks) => tasks !== item));
+  }
+
   const renderItem = ({ item, index, drag, isActive }) => (
     <TouchableOpacity onLongPress={drag}>
-      <Text>{item.value}</Text>
       <View
         style={styles.ContainerView}
       >

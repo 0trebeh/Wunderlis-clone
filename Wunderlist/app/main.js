@@ -82,8 +82,8 @@ export default class main extends React.Component {
             marginBottom: 10,
             padding: 0,
             borderRadius: 14,
-            backgroundColor: "#eee", // item.color
-            borderColor: "#eee", // item.color
+            backgroundColor: "#eee", 
+            borderColor: "#eee", 
             borderWidth: 10,
             alignItems: "center",
           }}
