@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   Text,
   View,
@@ -16,16 +17,26 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import styles from "./inbox.css";
 
 export default function Inbox() {
-  const [task, setTask] = useState([]);
+  //const [task, setTask] = useState([]);
+  var task = [];
   const [newTask, setNewTask] = useState("");
+
+  async function first() {
+    
+    const res = await axios.get("https://listical.herokuapp.com/api/inbox/1");
+    task = res.data;
+    console.log(res.data);
+    console.log(task);
+  }
+  first();
 
   const renderItem = ({ item, index, drag, isActive }) => (
     <TouchableOpacity onLongPress={drag}>
-      <Text>{item.label}</Text>
+      <Text>{item.value}</Text>
       <View
         style={styles.ContainerView}
       >
-        <Text style={styles.TaskText}>{item}</Text>
+        <Text style={styles.TaskText}>{item.value}</Text>
         <TouchableOpacity onPress={() => removeTask(item)}>
           <MaterialIcons name="delete-forever" size={25} color="#f64c75" />
         </TouchableOpacity>
@@ -45,7 +56,8 @@ export default function Inbox() {
       return;
     }
 
-    setTask([...task, newTask]);
+    //setTask([...task, newTask]);
+    task = task.push(newTask);
     setNewTask("");
 
     Keyboard.dismiss();
@@ -65,7 +77,7 @@ export default function Inbox() {
         },
         {
           text: "Delete",
-          onPress: () => setTask(task.filter((tasks) => tasks !== item)),
+          onPress: () => task = task.filter((tasks) => tasks !== item),
         },
       ],
       {
@@ -73,24 +85,6 @@ export default function Inbox() {
       }
     );
   }
-
-  /*useEffect(() => {
-    async function loadData() {
-      const task = await AsyncStorage.getItem("task");
-
-      if (task) {
-        setTask(JSON.parse(task));
-      }
-    }
-    loadData();
-  }, []);
-
-  useEffect(() => {
-    async function savedData() {
-      AsyncStorage.setItem("task", JSON.stringify(task));
-    }
-    savedData();
-  }, [task]);*/
 
   return (
     <KeyboardAvoidingView
@@ -103,10 +97,10 @@ export default function Inbox() {
         <View style={styles.Body}>
           <DraggableFlatList
             data={task}
-            index={task.index}
+            index={task.task_id}
             renderItem={renderItem}
-            keyExtractor={(item, index) => index.toString()}
-            onDragEnd={() => setTask(...task, newTask)} //Aqui es q se borran
+            keyExtractor={(item) => item.task_id.toString()}
+            onDragEnd={() => setTask(...task, newTask)} 
           />
         </View>
         <View style={styles.Form}>
