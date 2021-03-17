@@ -79,10 +79,7 @@ export default function Inbox() {
 
   const renderItem = ({ item, index, drag, isActive }) => (
     <TouchableOpacity onLongPress={drag}>
-      <Text>{item.value}</Text>
-      <View
-        style={styles.ContainerView}
-      >
+      <View style={styles.ContainerView}>
         <Text style={styles.TaskText}>{item.value}</Text>
         <TouchableOpacity onPress={() => removeTask(item)}>
           <MaterialIcons name="delete-forever" size={25} color="#f64c75" />
@@ -114,11 +111,12 @@ export default function Inbox() {
       <View style={styles.container}>
         <View style={styles.Body}>
           <DraggableFlatList
+            showsVerticalScrollIndicator={false}
             data={task}
             index={task.task_id}
             renderItem={renderItem}
             keyExtractor={(item) => item.task_id.toString()}
-            onDragEnd={() => setTask(...task, newTask)} 
+            onDragEnd={() => setTask(...task, newTask)}
           />
         </View>
         <View style={styles.Form}>
