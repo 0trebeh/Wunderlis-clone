@@ -107,18 +107,7 @@ export default class main extends React.Component {
         <View style={styles.body}>
           <TouchableOpacity onPress={() => navigate("Inbox")}>
             <View
-              style={{
-                marginBottom: 30,
-                padding: 15,
-                borderRadius: 20,
-                backgroundColor: "#eee", // item.color
-                borderColor: "#eee", // item.color
-                display: "flex",
-                flexDirection: "center",
-                justifyContent: "space-evenly",
-                borderWidth: 20,
-                alignItems: "center",
-              }}
+              style={styles.ContainerView}
             >
               <Text style={styles.categoryText}>Inbox</Text>
               <MaterialIcons name="inbox" size={30} color="black" />
@@ -129,7 +118,7 @@ export default class main extends React.Component {
             scrollEnabled={false}
             data={Lists}
             renderItem={renderLists}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.title}
           ></FlatList>
           <Button
             title="Add new list"

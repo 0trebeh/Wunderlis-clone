@@ -65,6 +65,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 20,
   },
+  ContainerView: {
+    marginBottom: 15,
+    padding: 15,
+    borderRadius: 4,
+    backgroundColor: "#eee",
+    borderColor: "#eee",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    borderWidth: 1,
+    alignItems: "center",
+  },
   myLists: {
     fontSize: 20,
     fontWeight: "bold",

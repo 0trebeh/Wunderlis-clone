@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginTop: 30,
         backgroundColor: "#d8412e",
-        paddingVertical: 10,
+        marginVertical: 10,
         borderRadius: 23,
     },
     textButton: {
@@ -46,7 +46,6 @@ const styles = StyleSheet.create({
     buttonNavigation: {
         alignSelf: "center",
         color: "#d8412e",
-        paddingVertical: 30,
     }
 });
 

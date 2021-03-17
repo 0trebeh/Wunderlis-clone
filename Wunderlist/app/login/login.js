@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { StatusBar } from "expo-status-bar";
-import { Text, View, Image, TextInput } from "react-native";
+import { Text, View, Image, TextInput, TouchableOpacity, Alert, ActivityIndicator, } from "react-native";
 import Icon from "@expo/vector-icons/AntDesign";
 import styles from "./login.css";
 
@@ -10,32 +10,53 @@ export default class login extends React.Component {
     super(props);
 
     this.state = {
-      //loading: false,
+      loading: false,
       username: "",
       password: "",
     };
   }
 
   login = async (navigate) => {
-    //this.setState({ loading : true });
+    this.setState({ loading : true });
     await axios
       .post("https://listical.herokuapp.com/api/users/login", {
         username: this.state.username,
         password: this.state.password,
       })
       .then(function (res) {
-        //this.setState({ loading : false });
-        localStorage.setItem("user", JSON.stringify(res.data[0]));
         console.log(res);
-        console.log(res.data[0]);
-        navigate("Home");
+        if(res.data[0].status == 404){
+          Alert.alert("User not Fount");
+          return;
+        } else {
+          localStorage.setItem("user", JSON.stringify(res.data[0]));
+          console.log(res);
+          console.log(res.data[0]);
+          navigate("Home");
+        }
       })
       .catch(function (error) {
         console.log(error);
       });
+    this.setState({ loading : false });
   };
 
   render() {
+    
+    if (this.state.loading) {
+      return (
+        <View
+          style={{
+            paddingVertical: 20,
+            borderTopWidth: 1,
+            borderColor: "#CED0CE",
+          }}
+        >
+          <ActivityIndicator animating size="small" />
+        </View>
+      );
+    }
+
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
@@ -70,24 +91,25 @@ export default class login extends React.Component {
             onChangeText={(password) => this.setState({ password: password })}
           />
         </View>
-
-        <View style={styles.buttonLogin}>
-          <Text onPress={() => this.login(navigate)} style={styles.textButton}>
-            Log In
+        <TouchableOpacity onPress={() => this.login(navigate)}>
+          <View style={styles.buttonLogin}>
+            <Text style={styles.textButton}>
+              Log In
+            </Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={{marginVertical: 30,}} onPress={() => navigate("Register")}>
+          <Text
+            style={styles.buttonNavigation}
+          >
+            New User
           </Text>
-        </View>
-        <Text
-          onPress={() => navigate("Register")}
-          style={styles.buttonNavigation}
-        >
-          New User
-        </Text>
-        <Text
-          onPress={() => localStorage.removeItem("user")}
-          style={styles.buttonNavigation}
-        >
-          clear
-        </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={{marginVertical: 30,}} onPress={() => localStorage.removeItem("user")}>
+          <Text style={styles.buttonNavigation}>
+            clear
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }

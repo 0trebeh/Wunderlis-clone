@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
     buttonNavigation: {
         alignSelf: "center",
         color: "#d8412e",
-        paddingVertical: 30,
     }
 });
 

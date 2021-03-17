@@ -1,7 +1,7 @@
 import React from "react";
 import axios from 'axios';
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, Image, TextInput } from "react-native";
+import { Text, View, Image, TextInput, TouchableOpacity } from "react-native";
 import Icon from "@expo/vector-icons/AntDesign";
 import styles from './register.css';
 
@@ -104,23 +104,23 @@ export default class Register extends React.Component {
             style={{ paddingHorizontal: 48 }}
           />
         </View>
-
-        <View
-          style={styles.buttonRegister}
-        >
-          <Text
-            onPress={() => this.register(navigate)}
-            style={styles.textButton}
+        
+        <TouchableOpacity onPress={() => this.register(navigate)}>
+          <View
+            style={styles.buttonRegister}
           >
-            Register
+            <Text
+              style={styles.textButton}
+            >
+              Register
+            </Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={{ marginVertical: 30,}} onPress={() => navigate("Login")}>
+          <Text style={styles.buttonNavigation}>
+            Already a user
           </Text>
-        </View>
-        <Text
-          onPress={() => navigate("Login")}
-          style={styles.buttonNavigation}
-        >
-          Already a user
-        </Text>
+        </TouchableOpacity>
       </View>
     );
   }
