@@ -66,9 +66,9 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   ContainerView: {
-    marginBottom: 15,
+    marginBottom: 20,
     padding: 15,
-    borderRadius: 4,
+    borderRadius: 12,
     backgroundColor: "#eee",
     borderColor: "#eee",
     display: "flex",
