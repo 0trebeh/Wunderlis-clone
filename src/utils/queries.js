@@ -16,7 +16,7 @@ module.exports = {
     //Queries list  
     getLists: 'SELECT * FROM list WHERE user_id = $1',
     createList: 'INSERT INTO list (title, position, color, edited, created, user_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-    updateList: 'UPDATE task SET title = $1, position = $2, color = $3, edited = $4, completed = $5 WHERE list_id = $6 RETURNING *',
+    updateList: 'UPDATE list SET title = $1, position = $2, color = $3, edited = $4, completed = $5 WHERE list_id = $6 RETURNING *',
     deleteList: 'DELETE FROM list WHERE list_id = $1',
     
     //task
