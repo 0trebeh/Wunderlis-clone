@@ -7,7 +7,7 @@ const {
 
     getLists,
 
-    getImbox,
+    getInbox,
     getTasks,
     getTask,
 
@@ -35,7 +35,7 @@ router.post('/list', createList);
 router.put('/list/:id', updateList);
 router.delete('/list/:id', deleteList);
 
-router.get('/imbox/:id', getImbox);
+router.get('/inbox/:id', getInbox);
 router.get('/tasks/:id', getTasks);
 router.get('/task/:id', getTask);
 router.post('/task', createTask);

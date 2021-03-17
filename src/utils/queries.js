@@ -20,7 +20,7 @@ module.exports = {
     deleteList: 'DELETE list WHERE list_id = $1',
     
     //task
-    getImbox: 'SELECT title, value, list FROM list JOIN task ON task.list = list.list_id AND list.user_id = $1',
+    getInbox: 'SELECT title, value, list FROM list JOIN task ON task.list = list.list_id AND list.user_id = $1',
     getTasks: 'SELECT * FROM task WHERE list = $1',
     getTask: 'SELECT * FROM task WHERE task_id = $1',
     createTask: 'INSERT INTO task (value, img, position_list, position_inbox, created, edited, tag, list) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
