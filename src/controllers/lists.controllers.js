@@ -228,7 +228,7 @@ const deleteList = async (req, res) => {
     try{
         const id = parseInt(req.params.id);
         await client.query(query.deleteList, [ id ]);
-        res.status(200).json(`Tag deleted Successfully`);
+        res.status(200).json(`List deleted Successfully`);
     }catch{
         res.status(505);
     }finally{
@@ -241,7 +241,7 @@ const deleteTask = async (req, res) => {
     try{
         const id = parseInt(req.params.id);
         await client.query(query.deleteTask, [ id ]);
-        res.status(200).json(`Tag deleted Successfully`);
+        res.status(200).json(`Task deleted Successfully`);
     }catch{
         res.status(505);
     }finally{
