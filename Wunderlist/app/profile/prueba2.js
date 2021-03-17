@@ -159,7 +159,7 @@ export default class prueba2 extends React.Component {
                 borderRadius: 4,
                 marginLeft: 10,
             }} onPress={() => Alert.alert('busqueda final')}>
-                <Ionicons name="ios-add" size={25} color="#fff" />
+                <Ionicons name="search-outline" size={25} color="#fff" />
             </TouchableOpacity>
             </View>
           <FlatList

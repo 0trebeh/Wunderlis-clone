@@ -10,6 +10,19 @@ const styles = StyleSheet.create({
   Body: {
     flex: 1,
   },
+  SearchBar: {
+    paddingLeft: 5,
+    justifyContent: "center",
+    backgroundColor: "#eee",
+    alignSelf: "stretch",
+    flexDirection: "row",
+    borderTopWidth: 1,
+    borderColor: "#eee",
+  },
+  searchButton: { 
+    marginVertical: "auto", 
+    paddingRight: 5 
+  },
   Form: {
     padding: 0,
     height: 60,

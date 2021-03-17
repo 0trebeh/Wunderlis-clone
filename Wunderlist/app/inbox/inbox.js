@@ -20,6 +20,7 @@ import styles from "./inbox.css";
 export default function Inbox() {
   const [loading, setLoading] = useState(false);
   const [task, setTask] = useState([]);
+  const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
 
   useEffect(() => {
@@ -30,6 +31,7 @@ export default function Inbox() {
       console.log(task);
       if (task) {
         setTask(task);
+        setTasks(task);
       }
       setLoading(false);
     }
@@ -97,6 +99,22 @@ export default function Inbox() {
     await axios.delete("https://listical.herokuapp.com/api/task/" + id.toString());
   }
 
+
+  function search(string) {
+
+    console.log(string);
+
+    if(string !== ""){
+      let tasksSearch = tasks.filter(function(res) { 
+        return res.value.toLowerCase().indexOf(string.toLowerCase()) > -1;
+      });
+      setTask( tasksSearch );
+    }
+    else {
+      setTask( tasks );
+    }    
+  }
+
   const renderItem = ({ item, index, drag, isActive }) => (
     <TouchableOpacity onLongPress={drag}>
       <View style={styles.ContainerView}>
@@ -128,6 +146,15 @@ export default function Inbox() {
       style={{ flex: 1 }}
       enabled={Platform.OS === "ios"}
     >
+      <View style={styles.SearchBar}>
+        <TextInput
+          style={styles.Input}
+          placeholderTextColor="#999"
+          placeholder="Search a task"
+          onChangeText={(text) => search(text)}
+        />
+        <Ionicons name="search-outline" style={styles.searchButton} size={25} color="#000"/>
+      </View>
       <View style={styles.container}>
         <View style={styles.Body}>
           <DraggableFlatList
