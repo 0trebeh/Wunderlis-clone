@@ -36,7 +36,9 @@ export default class main extends React.Component {
     
   getElements = async () => {
     this.setState({ loading : true });
-    const res = await axios.get('https://listical.herokuapp.com/api/lists/' + '1');
+    const res = await axios.get('https://listical.herokuapp.com/api/lists/' + 
+    JSON.parse(localStorage.getItem('user')).user_id.toString());
+
     this.setState({ Lists: res.data, loading : false });
     console.log(this.state.Lists);
   }
@@ -78,7 +80,7 @@ export default class main extends React.Component {
     console.log(newList);
 
     /*let lists = this.state.Lists;
-    const res = await axios.post("https://listical.herokuapp.com/api/task", Task);
+    const res = await axios.post("https://listical.herokuapp.com/api/list", newList);
     this.setState({ Lists : list.push( res.data[0] ) });*/
   }
 
@@ -120,7 +122,12 @@ export default class main extends React.Component {
     const username = JSON.parse(localStorage.getItem('user')).username;
 
     const renderLists = ({ item }) => (
-      <TouchableOpacity onPress={() => navigate("Inbox")}>
+      <TouchableOpacity onPress={() => navigate("Inbox" , { 
+        id: item.list_id, 
+        title: item.title,
+        color: item.color 
+        })
+      }>
         <View
           style={{
             marginBottom: 10,
@@ -176,7 +183,12 @@ export default class main extends React.Component {
               <MaterialIcons name="bookmark-outline" size={30} color="black" />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigate("Inbox")}>
+          <TouchableOpacity onPress={() => navigate("Inbox", { 
+            id: 0, 
+            title: "inbox",
+            color: "gray" 
+            })
+          }>
             <View
               style={styles.ContainerView}
             >
@@ -189,7 +201,7 @@ export default class main extends React.Component {
             scrollEnabled={false}
             data={this.state.Lists}
             renderItem={renderLists}
-            keyExtractor={(item) => item.title}
+            keyExtractor={(item) => item.list_id.toString()}
           ></FlatList>
           <Button
             title="Add new list"

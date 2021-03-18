@@ -18,16 +18,23 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { datetime, compare } from "../utils/datetime";
 import styles from "./inbox.css";
 
-export default function Inbox() {
+export default function Inbox({ navigate, route }) {
   const [loading, setLoading] = useState(false);
   const [task, setTask] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
+  var renderItem = "";
 
   useEffect(() => {
     async function loadData() {
       setLoading(true);
-      const res = await axios.get("https://listical.herokuapp.com/api/inbox/" + "1");
+      let res = [];
+      if(route.params.id == 0){
+        res = await axios.get("https://listical.herokuapp.com/api/inbox/" + 
+        JSON.parse(localStorage.getItem('user')).user_id.toString());
+      }else{
+        res = await axios.get("https://listical.herokuapp.com/api/tasks/" + route.params.id.toString());
+      }
       const task = res.data;
       console.log(task);
       if (task) {
@@ -56,14 +63,14 @@ export default function Inbox() {
       img: null,
       position_list: null,
       position_inbox: null,
-      created: null,
-      edited: null,
+      created: datetime(),
+      edited: datetime(),
       tag: null,
-      list: 1
+      list: route.params.id
     }
     Keyboard.dismiss();
     await axios.post("https://listical.herokuapp.com/api/task", Task);
-    const res = await axios.get("https://listical.herokuapp.com/api/inbox/" + "1");
+    const res = await axios.get("https://listical.herokuapp.com/api/inbox/" + route.params.id.toString());
     setTask( res.data );
     setNewTask("");
       
@@ -116,17 +123,30 @@ export default function Inbox() {
     }    
   }
 
-  const renderItem = ({ item, index, drag, isActive }) => (
-    <TouchableOpacity onLongPress={drag}>
-      <View style={styles.ContainerView}>
-        <Text style={styles.TaskText}>{item.value}</Text>
-        <TouchableOpacity onPress={() => removeTask(item)}>
-          <MaterialIcons name="delete-forever" size={25} color="#f64c75" />
-        </TouchableOpacity>
-      </View>
-    </TouchableOpacity>
-  );
-
+  if(route.params.id == 0){
+    renderItem = ({ item, index, drag, isActive }) => (
+      <TouchableOpacity onLongPress={drag} onPress={() => navigate("task" , { item })}>
+        <View style={styles.ContainerView}>
+          <Text style={styles.TaskText}>{item.value}</Text>
+          <TouchableOpacity onPress={() => removeTask(item)}>
+            <MaterialIcons name="delete-forever" size={25} color={item.color} />
+          </TouchableOpacity>
+        </View>
+      </TouchableOpacity>
+    );
+  }else{
+    renderItem = ({ item, index, drag, isActive }) => (
+      <TouchableOpacity onLongPress={drag} onPress={() => navigate("task" , { item })}>
+        <View style={styles.ContainerView}>
+          <Text style={styles.TaskText}>{item.value}</Text>
+          <TouchableOpacity onPress={() => removeTask(item)}>
+            <MaterialIcons name="delete-forever" size={25} color={route.params.color.toString()} />
+          </TouchableOpacity>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+  
   if (loading) {
     return (
       <View

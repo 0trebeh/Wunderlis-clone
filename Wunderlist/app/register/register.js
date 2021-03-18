@@ -25,7 +25,7 @@ export default class Register extends React.Component {
     };
   }
 
-  register = async (navigate) => {
+  register = async () => {
     //this.setState({ loading : true });
     await axios
       .post("https://listical.herokuapp.com/api/users/", {
@@ -38,7 +38,7 @@ export default class Register extends React.Component {
         //localStorage.setItem('user', JSON.stringify(res.data[0]));
         console.log(res);
         console.log(res.data[0]);
-        navigate("Home");
+        this.props.navigation.replace("Home");
       })
       .catch(function (error) {
         console.log(error);
@@ -109,7 +109,7 @@ export default class Register extends React.Component {
           </View>
 
           <TouchableOpacity
-            onPress={() => this.register(navigate)}
+            onPress={() => this.register()}
             disabled={(this.state.username == "") | (this.state.password == "")}
             style={
               this.state.username == "" ||

@@ -27,11 +27,11 @@ export default class login extends React.Component {
 
   componentDidMount(){
     if(JSON.parse(localStorage.getItem('user'))){
-      this.props.navigation.navigate("Home");
+      this.props.navigation.replace("Home");
     }
   };
 
-  login = async (navigate) => {
+  login = async () => {
     this.setState({ loading: true });
     await axios
       .post("https://listical.herokuapp.com/api/users/login", {
@@ -47,7 +47,7 @@ export default class login extends React.Component {
           localStorage.setItem("user", JSON.stringify(res.data[0]));
           console.log(res);
           console.log(res.data[0]);
-          navigate("Home");
+          this.props.navigation.replace("Home");
         }
       })
       .catch(function (error) {
@@ -114,7 +114,7 @@ export default class login extends React.Component {
           <TouchableOpacity
             id="loginBtn"
             disabled={(this.state.username == "") | (this.state.password == "")}
-            onPress={() => this.login(navigate)}
+            onPress={() => this.login()}
             style={
               this.state.username == "" || this.state.password == ""
                 ? styles.buttonLoginDisabled
