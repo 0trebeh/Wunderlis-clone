@@ -40,7 +40,8 @@ export default class login extends React.Component {
   };
 
   login = async () => {
-    var found = false;
+    let found = false;
+    let userData = "";
     this.setState({ loading: true });
     await axios
       .post("https://listical.herokuapp.com/api/users/login", {
@@ -54,6 +55,7 @@ export default class login extends React.Component {
           return;
         } else {
           //this.saveUserData(res.data[0].username);
+          userData = res.data[0];
           found = true;
         }
       })
