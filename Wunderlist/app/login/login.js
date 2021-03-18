@@ -26,14 +26,25 @@ export default class login extends React.Component {
     };
   }
 
-  saveUserData = async (username) => {
-    console.log("running");
+  componentDidMount(){
     try {
-      await AsyncStorage.setItem("userName", username);
-      console.log(value);
+      await AsyncStorage.setItem("userName", "papaya");
     } catch (e) {
       // saving error
     }
+
+    try {
+      const value = await AsyncStorage.getItem('userName');
+      if (value !== null) {
+        // We have data!!
+        console.log(value);
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+    /*if(JSON.parse(localStorage.getItem('user'))){
+      this.props.navigation.replace("Home");
+    }*/
   };
 
   login = async () => {
@@ -57,6 +68,15 @@ export default class login extends React.Component {
         console.log(error);
       });
     this.setState({ loading: false });
+  };
+
+  saveUserData = async (username) => {
+    console.log("running");
+    try {
+      await AsyncStorage.setItem("userName", username);
+    } catch (e) {
+      // saving error
+    }
   };
 
   render() {
