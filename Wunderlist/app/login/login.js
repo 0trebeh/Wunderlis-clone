@@ -53,7 +53,7 @@ export default class login extends React.Component {
     if (res.data[0].status == 404) {
       Alert.alert("User not found");
       return;
-    } else if(res.){
+    } else /*if(res.status == 202)*/{
       //this.saveUserData(res.data[0].username);
       try {
         console.log("estas dentroo");
