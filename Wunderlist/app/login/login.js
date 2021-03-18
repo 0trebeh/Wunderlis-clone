@@ -27,27 +27,20 @@ export default class login extends React.Component {
   }
 
   componentDidMount(){
+    /*const value = null;
     try {
-      await AsyncStorage.setItem("userName", "papaya");
-    } catch (e) {
-      // saving error
-    }
-
-    try {
-      const value = await AsyncStorage.getItem('userName');
-      if (value !== null) {
-        // We have data!!
-        console.log(value);
-      }
+      value = await AsyncStorage.getItem('userName');
     } catch (error) {
       // Error retrieving data
     }
-    /*if(JSON.parse(localStorage.getItem('user'))){
+
+    if(value !== null){
       this.props.navigation.replace("Home");
     }*/
   };
 
   login = async () => {
+    var found = false;
     this.setState({ loading: true });
     await axios
       .post("https://listical.herokuapp.com/api/users/login", {
@@ -60,24 +53,33 @@ export default class login extends React.Component {
           Alert.alert("User not found");
           return;
         } else {
-          this.saveUserData(res.data[0].username);
-          this.props.navigate.replace("Home");
+          //this.saveUserData(res.data[0].username);
+          found = true;
         }
       })
       .catch(function (error) {
         console.log(error);
       });
+
+    if(found == true){
+      try {
+        await AsyncStorage.setItem("userName", username);
+        this.props.navigate.replace("Home");
+      } catch (e) {
+        return;
+      }
+    }
     this.setState({ loading: false });
   };
 
-  saveUserData = async (username) => {
+  /*saveUserData = async (username) => {
     console.log("running");
     try {
       await AsyncStorage.setItem("userName", username);
     } catch (e) {
-      // saving error
+      return;
     }
-  };
+  };*/
 
   render() {
     if (this.state.loading) {
