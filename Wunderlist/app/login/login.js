@@ -58,7 +58,7 @@ export default class login extends React.Component {
       try {
         console.log("estas dentroo");
         console.log(res.data[0]);
-        await AsyncStorage.setItem("user", res.data[0]);
+        await AsyncStorage.setItem("user", JSON.stringify(res.data[0]));
         this.props.navigate.replace("Home");
       } catch (e) {
         return;
