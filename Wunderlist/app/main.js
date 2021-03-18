@@ -17,43 +17,106 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { color } from "react-native-reanimated";
 
 export default class main extends React.Component {
+
   constructor(props){
-        super(props);
+      super(props);
     
-        this.state = {
-            loading : false,
-            Lists : [],
-        }
+    this.state = {
+      loading : false,
+      Lists : [],
     }
+  }
       
-    componentDidMount(){
-        this.getElements();
-    };
+  componentDidMount(){
+    this.getElements();
+  };
 
-    componentDidUpdate(){
-
-    }
+  componentDidUpdate(){
+  }
     
-    getElements = async () => {
-        this.setState({ loading : true });
-        const res = await axios.get('https://listical.herokuapp.com/api/lists/' + '1');
-        this.setState({ Lists: res.data, loading : false });
-        console.log(this.state.Lists);
+  getElements = async () => {
+    this.setState({ loading : true });
+    const res = await axios.get('https://listical.herokuapp.com/api/lists/' + '1');
+    this.setState({ Lists: res.data, loading : false });
+    console.log(this.state.Lists);
+  }
+
+  createList = async () => {
+    let newtitle = "";
+    let pos = this.state.Lists.length;
+
+    Alert.alert(
+      "Delete list",
+      [
+        {
+          text: "Cancel",
+          onPress: () => {
+            return;
+          },
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          onPress: () => {
+            remove(item);
+          },
+        },
+      ],
+      {
+        cancelable: false,
+      }
+    );
+
+    const newList = {
+      title : newtitle, 
+      position : pos, 
+      color : "gray", 
+      edited : datetime(), 
+      created : datetime(), 
+      user_id: JSON.parse(localStorage.getItem('user')).user_id
     }
+    console.log(newList);
+
+    /*let lists = this.state.Lists;
+    const res = await axios.post("https://listical.herokuapp.com/api/task", Task);
+    this.setState({ Lists : list.push( res.data[0] ) });*/
+  }
+
+  deleteList = async (item) => {
+
+    Alert.alert(
+      "Delete list",
+      "Are you sure you want to delete this list?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => {
+            return;
+          },
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          onPress: () => {
+            remove(item);
+          },
+        },
+      ],
+      {
+        cancelable: false,
+      }
+    );
+  }
+
+  remove = async (item) => {
+    const id = item.task_id;
+    let lists = this.state.Lists;
+    this.setState({ Lists: lists.filter((list) => list !== item) });
+    await axios.delete("https://listical.herokuapp.com/api/list/" + id.toString());
+  }
 
   render() {
     const { navigate } = this.props.navigation;
-
-    const Lists = [
-      {
-        title: "Homework",
-        color: "red",
-      },
-      {
-        title: "Reading list",
-        color: "blue",
-      },
-    ];
 
     const renderLists = ({ item }) => (
       <TouchableOpacity onPress={() => navigate("Inbox")}>
@@ -95,8 +158,6 @@ export default class main extends React.Component {
     }
     return (
       <View style={styles.container}>
-        <Text> {datetime()} </Text>
-        <Text> {compare(datetime(), "2021-03-16T23:37:14.000Z")} </Text>
         <View style={styles.body}>
           <TouchableOpacity onPress={() => navigate("Inbox")}>
             <View
@@ -109,13 +170,13 @@ export default class main extends React.Component {
           <Text style={styles.myLists}> My lists: </Text>
           <FlatList
             scrollEnabled={false}
-            data={Lists}
+            data={this.state.Lists}
             renderItem={renderLists}
             keyExtractor={(item) => item.title}
           ></FlatList>
           <Button
             title="Add new list"
-            onPress={() => Alert.alert("New list added")}
+            onPress={() => this.createList()}
           ></Button>
         </View>
         <View style={styles.end}>
