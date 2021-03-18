@@ -40,8 +40,8 @@ export default class login extends React.Component {
   };
 
   login = async () => {
-    let found = false;
-    let userData = "";
+    var found = false;
+    var userData = "";
     this.setState({ loading: true });
     await axios
       .post("https://listical.herokuapp.com/api/users/login", {
@@ -65,7 +65,9 @@ export default class login extends React.Component {
 
     if(found == true){
       try {
-        await AsyncStorage.setItem("userName", username);
+        console.log("estas dentroo");
+        console.log(userData);
+        await AsyncStorage.setItem("user", userData);
         this.props.navigate.replace("Home");
       } catch (e) {
         return;
