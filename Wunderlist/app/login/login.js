@@ -40,39 +40,33 @@ export default class login extends React.Component {
   };
 
   login = async () => {
-    var found = false;
-    var userData = "";
+
     this.setState({ loading: true });
-    await axios
+    const res = await axios
       .post("https://listical.herokuapp.com/api/users/login", {
         username: this.state.username,
         password: this.state.password,
-      })
-      .then(function (res) {
-        console.log(res.data[0].username);
-        if (res.data[0].status == 404) {
-          Alert.alert("User not found");
-          return;
-        } else {
-          //this.saveUserData(res.data[0].username);
-          userData = res.data[0];
-          found = true;
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
       });
 
-    if(found == true){
+    console.log(res.data[0].username);
+
+    if (res.data[0].status == 404) {
+      Alert.alert("User not found");
+      return;
+    } else if(res.){
+      //this.saveUserData(res.data[0].username);
       try {
         console.log("estas dentroo");
-        console.log(userData);
-        await AsyncStorage.setItem("user", userData);
+        console.log(res.data[0]);
+        await AsyncStorage.setItem("user", res.data[0]);
         this.props.navigate.replace("Home");
       } catch (e) {
         return;
       }
     }
+
+      
+
     this.setState({ loading: false });
   };
 
