@@ -28,6 +28,7 @@ export default function App({ navigation }) {
         <Stack.Screen name="Inbox" component={inbox} />
         <Stack.Screen name="tags" component={tags} />
         <Stack.Screen name="task" component={task} />
+        <Stack.Screen name="notifications" component={notifications} />
       </Stack.Navigator>
     </NavigationContainer>
   );

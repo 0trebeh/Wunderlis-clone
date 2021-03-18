@@ -166,6 +166,10 @@ export default class main extends React.Component {
     }
     return (
       <View style={styles.container}>
+        <Button
+            title="probar notification"
+            onPress={() => navigate("notifications")}
+          ></Button>
         <View style={styles.body}>
           <TouchableOpacity onPress={() => navigate("Profile")}>
             <View
