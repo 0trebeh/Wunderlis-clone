@@ -11,7 +11,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export default function notifications() {
+export default function notifications({ navigation, route }) {
   const [expoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
@@ -45,6 +45,12 @@ export default function notifications() {
         title="Press to schedule a notification"
         onPress={async () => {
           await schedulePushNotification();
+        }}
+      />
+      <Button
+        title="Prueba con draggable flatlist"
+        onPress={() => {
+          navigation.navigate("Example");
         }}
       />
     </View>
