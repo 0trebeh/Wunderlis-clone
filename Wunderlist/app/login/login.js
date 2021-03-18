@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StatusBar } from "expo-status-bar";
 import {
   Text,
@@ -25,9 +26,13 @@ export default class login extends React.Component {
     };
   }
 
-  componentDidMount(){
-    if(JSON.parse(localStorage.getItem('user'))){
-      this.props.navigation.replace("Home");
+  saveUserData = async (username) => {
+    console.log("running");
+    try {
+      await AsyncStorage.setItem("userName", username);
+      console.log(value);
+    } catch (e) {
+      // saving error
     }
   };
 
@@ -39,15 +44,13 @@ export default class login extends React.Component {
         password: this.state.password,
       })
       .then(function (res) {
-        console.log(res);
+        console.log(res.data[0].username);
         if (res.data[0].status == 404) {
           Alert.alert("User not found");
           return;
         } else {
-          localStorage.setItem("user", JSON.stringify(res.data[0]));
-          console.log(res);
-          console.log(res.data[0]);
-          this.props.navigation.replace("Home");
+          this.saveUserData(res.data[0].username);
+          this.props.navigate.replace("Home");
         }
       })
       .catch(function (error) {
