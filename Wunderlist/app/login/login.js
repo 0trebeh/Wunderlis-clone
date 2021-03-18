@@ -25,6 +25,12 @@ export default class login extends React.Component {
     };
   }
 
+  componentDidMount(){
+    if(JSON.parse(localStorage.getItem('user'))){
+      this.props.navigation.navigate("Home");
+    }
+  };
+
   login = async (navigate) => {
     this.setState({ loading: true });
     await axios

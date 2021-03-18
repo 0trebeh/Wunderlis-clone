@@ -46,7 +46,7 @@ export default class main extends React.Component {
     let pos = this.state.Lists.length;
 
     Alert.alert(
-      "Delete list",
+      "el titulo de la lista",
       [
         {
           text: "Cancel",
@@ -117,6 +117,7 @@ export default class main extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation;
+    const username = JSON.parse(localStorage.getItem('user')).username;
 
     const renderLists = ({ item }) => (
       <TouchableOpacity onPress={() => navigate("Inbox")}>
@@ -159,6 +160,22 @@ export default class main extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.body}>
+          <TouchableOpacity onPress={() => navigate("Profile")}>
+            <View
+              style={styles.ContainerView}
+            >
+              <Text style={styles.categoryText}>{ username }</Text>
+              <MaterialIcons name="person-outline" size={30} color="black" />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigate("tags")}>
+            <View
+              style={styles.ContainerView}
+            >
+              <Text style={styles.categoryText}>Tags</Text>
+              <MaterialIcons name="bookmark-outline" size={30} color="black" />
+            </View>
+          </TouchableOpacity>
           <TouchableOpacity onPress={() => navigate("Inbox")}>
             <View
               style={styles.ContainerView}
@@ -178,19 +195,6 @@ export default class main extends React.Component {
             title="Add new list"
             onPress={() => this.createList()}
           ></Button>
-        </View>
-        <View style={styles.end}>
-          <Button
-            color="#000"
-            title="Profile"
-            onPress={() => navigate("Profile")}
-          />
-          <Button
-            color="#000"
-            title="Login"
-            onPress={() => navigate("Login")}
-          />
-          <Button color="#000" title="tags" onPress={() => navigate("tags")} />
         </View>
       </View>
     );
