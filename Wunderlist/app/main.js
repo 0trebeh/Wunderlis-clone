@@ -81,7 +81,7 @@ export default class main extends React.Component {
 
     /*let lists = this.state.Lists;
     const res = await axios.post("https://listical.herokuapp.com/api/list", newList);
-    this.setState({ Lists : list.push( res.data[0] ) });*/
+    this.setState({ Lists : lists.push( res.data[0] ) });*/
   }
 
   deleteList = async (item) => {

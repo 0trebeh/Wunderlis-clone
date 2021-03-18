@@ -125,9 +125,10 @@ export default function Inbox({ navigate, route }) {
 
   if(route.params.id == 0){
     renderItem = ({ item, index, drag, isActive }) => (
-      <TouchableOpacity onLongPress={drag} onPress={() => navigate("task" , { item })}>
+      <TouchableOpacity onLongPress={drag}>
         <View style={styles.ContainerView}>
-          <Text style={styles.TaskText}>{item.value}</Text>
+          <Text style={styles.TaskText} 
+          onPress={() => navigate("task" , { item })}>{item.value}</Text>
           <TouchableOpacity onPress={() => removeTask(item)}>
             <MaterialIcons name="delete-forever" size={25} color={item.color} />
           </TouchableOpacity>
@@ -136,9 +137,10 @@ export default function Inbox({ navigate, route }) {
     );
   }else{
     renderItem = ({ item, index, drag, isActive }) => (
-      <TouchableOpacity onLongPress={drag} onPress={() => navigate("task" , { item })}>
+      <TouchableOpacity onLongPress={drag}>
         <View style={styles.ContainerView}>
-          <Text style={styles.TaskText}>{item.value}</Text>
+          <Text style={styles.TaskText} 
+          onPress={() => navigate("task" , { item })}>{item.value}</Text>
           <TouchableOpacity onPress={() => removeTask(item)}>
             <MaterialIcons name="delete-forever" size={25} color={route.params.color.toString()} />
           </TouchableOpacity>
