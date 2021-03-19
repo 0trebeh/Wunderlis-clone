@@ -5,7 +5,7 @@ import Constants from 'expo-constants';
 import axios from "axios";
 import { color } from 'react-native-reanimated';
 
-export default function ImagePickerExample() {
+export default function ImagePicker() {
   const [image, setImage] = useState(null);
   const [images, setImages] = useState([null]);
 
