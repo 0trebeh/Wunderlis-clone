@@ -19,9 +19,10 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderColor: "#eee",
   },
-  searchButton: { 
-    marginVertical: "auto", 
-    paddingRight: 5 
+  searchButton: {
+    marginVertical: "auto",
+    paddingRight: 5,
+    marginTop: 5,
   },
   Form: {
     padding: 0,
