@@ -5,7 +5,7 @@ import Constants from 'expo-constants';
 import axios from "axios";
 import { color } from 'react-native-reanimated';
 
-export default function Image() {
+export default function Img() {
   const [image, setImage] = useState(null);
   const [images, setImages] = useState([null]);
 

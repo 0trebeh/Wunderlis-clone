@@ -48,9 +48,9 @@ export default function notifications({ navigation, route }) {
         }}
       />
       <Button
-        title="Prueba con draggable flatlist"
+        title="images"
         onPress={() => {
-        navigation.navigate("Example");
+        navigation.navigate("Img");
       }}
       />
     </View>

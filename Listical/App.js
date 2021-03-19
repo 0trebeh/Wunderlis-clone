@@ -11,7 +11,7 @@ import register from "./app/register/register";
 import inbox from "./app/inbox/inbox";
 import tags from "./app/tags/tags";
 import task from "./app/task/task";
-import Image from "./app/task/img";
+import Img from "./app/task/img";
 
 import notifications from "./app/utils/notifications";
 
@@ -29,7 +29,7 @@ export default function App({ navigation }) {
         <Stack.Screen name="tags" component={tags} />
         <Stack.Screen name="task" component={task} />
         <Stack.Screen name="notifications" component={notifications} />
-        <Stack.Screen name="Image" component={Image} />
+        <Stack.Screen name="Img" component={Img} />
       </Stack.Navigator>
     </NavigationContainer>
   );
