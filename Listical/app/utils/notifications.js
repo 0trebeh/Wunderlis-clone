@@ -48,6 +48,12 @@ export default function notifications({ navigation, route }) {
         }}
       />
       <Button
+            title="imagenes"
+            onPress={() => {
+            navigation.navigate("prueba2");
+            }}
+        />
+      <Button
             title="Prueba con draggable flatlist"
             onPress={() => {
             navigation.navigate("Example");
@@ -64,7 +70,7 @@ async function schedulePushNotification() {
       body: 'Exitosa',
       data: { data: 'data' },
     },
-    trigger: { seconds: 2 },
+    trigger: { seconds: 0 },
   });
 }
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Image, View, Platform, FlatList } from 'react-native';
+import { Button, Image, View, Platform, FlatList, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import axios from "axios";
@@ -8,10 +8,10 @@ import { color } from 'react-native-reanimated';
 export default function ImagePickerExample() {
   const [image, setImage] = useState(null);
   const [images, setImages] = useState([null]);
-  const [limit, setLimit] = useState(0);
 
   useEffect(() => {
     (async () => {
+      setLimit(0);
       if (Platform.OS !== 'web') {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== 'granted') {
@@ -28,25 +28,22 @@ export default function ImagePickerExample() {
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.cancelled) {
       setImage(result.uri);
       setImages([...images, result.uri]); 
-    }
-    
-    //let i = images;
-    //setLimit(i.length);
+    }   
+    console.log(images.length)
   };
 
   const putoff = (item) => {
     let imgs = images.filter((img) => img !== item);
     setImages(imgs); 
-    //let i = images;
-    //setLimit(i.length);
+    console.log(images.length)
   }
 
   const sendImages = async () => {
+    
+    /*
     const url = 'http://example.com/file-upload';
     const formData = new FormData();
     formData.append(...images);
@@ -55,7 +52,9 @@ export default function ImagePickerExample() {
         'content-type': 'multipart/form-data'
       }
     }
-    return  axios.post(url, formData, config)
+    return  axios.post(url, formData, config)*/
+
+    Alert.alert("Imagen Enviada!", "Ahora podra verla en su tarea.");
   } 
 
   return (
@@ -79,10 +78,10 @@ export default function ImagePickerExample() {
           marginHorizontal: 25,
         }}>
           <Button title="Enviar" onPress={() => sendImages()} />
-          <View style={ 5 != 5 ? { margin: 0, padding: 0 } : { width: 0, height: 0 }}>
+          <View style={ images.length != 5 ? { margin: 0, padding: 0 } : { width: 0, height: 0 }}>
           <Button title="Añadir imagen" onPress={pickImage} />
           </View>
-          <View style={ 5 == 5 ? { margin: 0, padding: 0 } : { width: 0, height: 0 }}>
+          <View style={ images.length == 5 ? { margin: 0, padding: 0 } : { width: 0, height: 0 }}>
             <Button color="red" title="Limite alcanzado" />
           </View>
         </View>

@@ -10,6 +10,7 @@ import {
   Alert,
   TouchableOpacity,
   ActivityIndicator,
+  KeyboardAvoidingView,
 } from "react-native";
 import styles from "./main.css";
 import { datetime, compare } from "./utils/datetime";
