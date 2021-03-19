@@ -173,7 +173,7 @@ export default class main extends React.Component {
             borderColor: "#CED0CE",
           }}
         >
-          <ActivityIndicator animating size="small" />
+          <ActivityIndicator animating size="small" color='#999999' />
         </View>
       );
     }

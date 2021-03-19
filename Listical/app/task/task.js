@@ -11,4 +11,11 @@ export default class task extends React.Component {
           style={styles.img}
         /> */
     
+
+        <Button
+            title="add img"
+            onPress={() => {
+            navigation.navigate("Image");
+            }}
+        />
 }

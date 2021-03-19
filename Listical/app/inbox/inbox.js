@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import {
   Text,
@@ -13,7 +13,9 @@ import {
   SearchBar,
   ActivityIndicator,
 } from "react-native";
-import DraggableFlatList from "react-native-draggable-flatlist";
+import DraggableFlatList, {
+  RenderItemParams,
+} from 'react-native-draggable-flatlist';
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { datetime, compare } from "../utils/datetime";
 import styles from "./inbox.css";
@@ -77,7 +79,7 @@ export default function Inbox({ navigation, route }) {
     }
     Keyboard.dismiss();
     await axios.post("https://listical.herokuapp.com/api/task", Task);
-    const res = await axios.get("https://listical.herokuapp.com/api/inbox/" + route.params.id.toString());
+    const res = await axios.get("https://listical.herokuapp.com/api/tasks/" + route.params.id.toString());
     setTask( res.data );
     setNewTask("");
       
@@ -116,9 +118,6 @@ export default function Inbox({ navigation, route }) {
 
 
   function search(string) {
-
-    console.log(string);
-
     if(string !== ""){
       let tasksSearch = tasks.filter(function(res) { 
         return res.value.toLowerCase().indexOf(string.toLowerCase()) > -1;
@@ -131,25 +130,25 @@ export default function Inbox({ navigation, route }) {
   }
 
   if(route.params.id == 0){
-    renderItem = ({ item, index, drag, isActive }) => (
-      <TouchableOpacity onLongPress={drag}>
+    renderItem = ({ item, index, drag, isActive }: RenderItemParams<{tasks: string}> ) => (
+      <TouchableOpacity onLongPress={ drag }>
         <View style={styles.ContainerView}>
           <Text style={styles.TaskText} 
           onPress={() => navigation.navigate("task" , { item })}>{item.value}</Text>
           <TouchableOpacity onPress={() => removeTask(item)}>
-            <MaterialIcons name="delete-forever" size={25} color={item.color} />
+            <MaterialIcons name="delete-forever" size={25} color={ isActive ? 'black' : item.color} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
     );
   }else{
-    renderItem = ({ item, index, drag, isActive }) => (
+    renderItem = ({ item, index, drag, isActive }: RenderItemParams<{tasks: string}>) => (
       <TouchableOpacity onLongPress={drag}>
         <View style={styles.ContainerView}>
           <Text style={styles.TaskText} 
           onPress={() => navigation.navigate("task" , { item })}>{item.value}</Text>
           <TouchableOpacity onPress={() => removeTask(item)}>
-            <MaterialIcons name="delete-forever" size={25} color={route.params.color.toString()} />
+            <MaterialIcons name="delete-forever" size={25} color={ isActive ? 'black' : route.params.color} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
@@ -165,7 +164,7 @@ export default function Inbox({ navigation, route }) {
           borderColor: "#CED0CE",
         }}
       >
-        <ActivityIndicator animating size="small" />
+        <ActivityIndicator animating size="small" color='#999999' />
       </View>
     );
   }
@@ -188,23 +187,22 @@ export default function Inbox({ navigation, route }) {
       <View style={styles.container}>
         <View style={styles.Body}>
           <DraggableFlatList
-            showsVerticalScrollIndicator={false}
             data={task}
-            index={task.task_id}
             renderItem={renderItem}
-            keyExtractor={(item) => item.task_id.toString()}
-            onDragEnd={() => setTask(...task, newTask)}
+            keyExtractor={(item, index) => item.task_id.toString()}
+            onDragEnd={({ data }) => setTask(data)}
           />
         </View>
-        <View style={styles.Form}>
+        <View style={ route.params.id == 0 ? { width: 0, height: 0 } : styles.Form}>
           <TextInput
-            style={styles.Input}
+            style={ route.params.id == 0 ? { width: 0, height: 0 } : styles.Input}
             placeholderTextColor="#999"
             placeholder="Add a new task"
             onChangeText={(text) => setNewTask(text)}
             value={newTask}
           />
-          <TouchableOpacity style={styles.Button} onPress={() => addTask()}>
+          <TouchableOpacity style={ route.params.id == 0 ? { width: 0, height: 0 } : styles.Button} 
+          onPress={() => addTask()}>
             <Ionicons name="ios-add" size={25} color="#fff" />
           </TouchableOpacity>
         </View>

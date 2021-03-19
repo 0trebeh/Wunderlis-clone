@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Image, View, Platform, FlatList, Alert } from 'react-native';
+import { Button, Image, View, Platform, FlatList, Alert, ScrollView } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import axios from "axios";
 import { color } from 'react-native-reanimated';
 
-export default function ImagePickerExample() {
+export default function ImagePicker() {
   const [image, setImage] = useState(null);
   const [images, setImages] = useState([null]);
 
@@ -60,6 +60,7 @@ export default function ImagePickerExample() {
   return (
     <View style={{ flex: 1, justifyContent: 'flex-end', marginTop: 75 }}>
       <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+        <ScrollView>
         <FlatList
           data={images}
           renderItem={({ item }) => (
@@ -70,6 +71,7 @@ export default function ImagePickerExample() {
           )}
           keyExtractor={(item) => item}
         ></FlatList>
+        </ScrollView>
       </View>
         <View style={{
           flexDirection: "row",
@@ -78,11 +80,11 @@ export default function ImagePickerExample() {
           marginHorizontal: 25,
         }}>
           <Button title="Enviar" onPress={() => sendImages()} />
-          <View style={ images.length != 5 ? { margin: 0, padding: 0 } : { width: 0, height: 0 }}>
-          <Button title="Añadir imagen" onPress={pickImage} />
-          </View>
           <View style={ images.length == 5 ? { margin: 0, padding: 0 } : { width: 0, height: 0 }}>
             <Button color="red" title="Limite alcanzado" />
+          </View>
+          <View style={ images.length != 5 ? { margin: 0, padding: 0 } : { width: 0, height: 0 }}>
+            <Button title="Añadir imagen" onPress={pickImage} />
           </View>
         </View>
     </View>
