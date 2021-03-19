@@ -7,7 +7,7 @@ Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
     shouldPlaySound: true,
-    shouldSetBadge: false,
+    shouldSetBadge: true,
   }),
 });
 
@@ -47,12 +47,6 @@ export default function notifications({ navigation, route }) {
           await schedulePushNotification();
         }}
       />
-      <Button
-            title="Prueba con draggable flatlist"
-            onPress={() => {
-            navigation.navigate("Example");
-            }}
-        />
     </View>
   );
 }
