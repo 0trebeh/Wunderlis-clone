@@ -14,7 +14,7 @@ import {
 import styles from "./main.css";
 import { datetime, compare } from "./utils/datetime";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { color } from "react-native-reanimated";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default class main extends React.Component {
   constructor(props) {
@@ -28,24 +28,44 @@ export default class main extends React.Component {
   }
 
   async componentDidMount() {
+    this.getData();
     this.getElements();
   }
+
+  getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem("user");
+      console.log(value);
+      this.setState({ user: value });
+      if (value !== null) {
+        console.log("null");
+      }
+    } catch (e) {
+      // error reading value
+    }
+  };
 
   getElements = async () => {
     this.setState({ loading: true });
     let response = "";
-    try {
-      response = await AsyncStorage.getItem("user");
-      console.log(response);
-    } catch (error) {
-      // Error retrieving data
+    if (this.state.loading === null) {
+      console.log("Already loaded");
+    } else {
+      try {
+        console.log("Loading");
+        this.setState({ loading: false });
+        const response = await AsyncStorage.getItem("user");
+        console.log(response);
+      } catch (error) {
+        // Error retrieving data
+      }
     }
     const res = await axios.get(
       "https://listical.herokuapp.com/api/lists/" +
         JSON.parse(response).user_id.toString()
     );
 
-    this.setState({ user: response, Lists: res.data, loading: false });
+    this.setState({ user: response.username, Lists: res.data, loading: false });
     console.log(this.state.Lists);
   };
 
@@ -126,7 +146,7 @@ export default class main extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    const username = "otrebeh";
+    const username = this.state.user;
 
     console.log();
 
@@ -173,6 +193,7 @@ export default class main extends React.Component {
           }}
         >
           <ActivityIndicator animating size="small" />
+          <Text>I am loading</Text>
         </View>
       );
     }
