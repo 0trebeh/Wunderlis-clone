@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   KeyboardAvoidingView,
+  ScrollView,
 } from "react-native";
 import styles from "./main.css";
 import { datetime, compare } from "./utils/datetime";
@@ -181,6 +182,7 @@ export default class main extends React.Component {
     const username = this.state.user.username;
 
     return (
+      <ScrollView>
       <View style={styles.container}>
         <Button
           title="probar notification"
@@ -225,6 +227,7 @@ export default class main extends React.Component {
           ></Button>
         </View>
       </View>
+      </ScrollView>
     );
   }
 }
