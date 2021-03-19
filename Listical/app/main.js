@@ -24,22 +24,26 @@ export default class main extends React.Component {
     this.state = {
       loading : false,
       Lists : [],
+      user : ""
     }
   }
       
-  componentDidMount(){
+  async componentDidMount(){
     this.getElements();
   };
-
-  componentDidUpdate(){
-  }
     
   getElements = async () => {
     this.setState({ loading : true });
+    let response = "";
+    try {
+      response = await AsyncStorage.getItem('user');
+    } catch (error) {
+      // Error retrieving data
+    }
     const res = await axios.get('https://listical.herokuapp.com/api/lists/' + 
-    JSON.parse(localStorage.getItem('user')).user_id.toString());
+    JSON.parse(response).user_id.toString()); 
 
-    this.setState({ Lists: res.data, loading : false });
+    this.setState({ user : response, Lists: res.data, loading : false });
     console.log(this.state.Lists);
   }
 
@@ -75,7 +79,7 @@ export default class main extends React.Component {
       color : "gray", 
       edited : datetime(), 
       created : datetime(), 
-      user_id: JSON.parse(localStorage.getItem('user')).user_id
+      user_id: JSON.parse(this.state.user).user_id
     }
     console.log(newList);
 
@@ -119,7 +123,7 @@ export default class main extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    const username = JSON.parse(localStorage.getItem('user')).username;
+    const username = JSON.parse(this.state.user).username;
 
     const renderLists = ({ item }) => (
       <TouchableOpacity onPress={() => navigate("Inbox" , { 

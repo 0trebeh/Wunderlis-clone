@@ -22,6 +22,7 @@ export default class tags extends React.Component {
       this.state = {
         loading : false,
         tags : [],
+        user : ""
       }
     }
         
@@ -34,10 +35,16 @@ export default class tags extends React.Component {
       
     getElements = async () => {
       this.setState({ loading : true });
+      let response = "";
+      try {
+        response = await AsyncStorage.getItem('user');
+      } catch (error) {
+        // Error retrieving data
+      }
       const res = await axios.get('https://listical.herokuapp.com/api/tags/' + 
-      JSON.parse(localStorage.getItem('user')).user_id.toString());
+      JSON.parse(response).user_id.toString());
   
-      this.setState({ tags: res.data, loading : false });
+      this.setState({ user: response, tags: res.data, loading : false });
       console.log(this.state.tags);
     }
 
@@ -71,7 +78,7 @@ export default class tags extends React.Component {
             description, 
             color, 
             priority,
-            user_id: JSON.parse(localStorage.getItem('user')).user_id
+            user_id: JSON.parse(this.state.user).user_id
         }
         console.log(newList);
     

@@ -27,7 +27,7 @@ export default class login extends React.Component {
   }
 
   async componentDidMount(){
-    /*const value = null;
+    const value = null;
     try {
       value = await AsyncStorage.getItem('user');
     } catch (error) {
@@ -36,7 +36,7 @@ export default class login extends React.Component {
 
     if(value !== null){
       this.props.navigation.replace("Home");
-    }*/
+    }
   };
 
   login = async () => {
@@ -52,7 +52,6 @@ export default class login extends React.Component {
 
     if (res.data[0].status == 404) {
       Alert.alert("User not found");
-      return;
     } else {
       
       try {
@@ -60,7 +59,7 @@ export default class login extends React.Component {
         await AsyncStorage.setItem("user", JSON.stringify(res.data[0]));
         this.props.navigation.replace("Home");
       } catch (e) {
-        return;
+        //error
       }
     }    
 
@@ -126,7 +125,7 @@ export default class login extends React.Component {
           <TouchableOpacity
             id="loginBtn"
             disabled={(this.state.username == "") | (this.state.password == "")}
-            onPress={() => this.login(replace)}
+            onPress={() => this.login()}
             style={
               this.state.username == "" || this.state.password == ""
                 ? styles.buttonLoginDisabled

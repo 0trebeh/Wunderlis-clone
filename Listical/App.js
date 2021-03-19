@@ -12,7 +12,6 @@ import inbox from './app/inbox/inbox'
 import tags from './app/tags/tags'
 import task from './app/task/task'
 import Example from './app/profile/prueba'
-import prueba2 from './app/profile/prueba2'
 
 import notifications from './app/utils/notifications';
 
@@ -23,9 +22,6 @@ export default function App({ navigation }) {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="notifications" component={notifications} />
-        <Stack.Screen name="Example" component={Example} />
-        <Stack.Screen name="prueba2" component={prueba2} />
         <Stack.Screen name="Login" component={login} />
         <Stack.Screen name="Home" component={main} />
         <Stack.Screen name="Profile" component={profile} />
@@ -33,6 +29,8 @@ export default function App({ navigation }) {
         <Stack.Screen name="Inbox" component={inbox} />
         <Stack.Screen name="tags" component={tags} />
         <Stack.Screen name="task" component={task} />
+        <Stack.Screen name="notifications" component={notifications} />
+        <Stack.Screen name="Example" component={Example} />
       </Stack.Navigator>
     </NavigationContainer>
   );

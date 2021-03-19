@@ -21,7 +21,7 @@ export default class profile extends React.Component {
   };
 
   getUser = async () => {
-    var res = "";
+    let res = "";
     try {
       res = await AsyncStorage.getItem('user');
     } catch (error) {
