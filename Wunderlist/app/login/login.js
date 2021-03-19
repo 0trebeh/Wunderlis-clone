@@ -39,35 +39,13 @@ export default class login extends React.Component {
     }*/
   };
 
-<<<<<<< HEAD
   login = async () => {
 
-=======
-  login = async (replace) => {
->>>>>>> Heberto
     this.setState({ loading: true });
     const res = await axios
       .post("https://listical.herokuapp.com/api/users/login", {
         username: this.state.username,
         password: this.state.password,
-<<<<<<< HEAD
-=======
-      })
-      .then(function (res) {
-        console.log(res);
-        if (res.data[0].status == 404) {
-          Alert.alert("User not found");
-          return;
-        } else {
-          localStorage.setItem("user", JSON.stringify(res.data[0]));
-          console.log(res);
-          console.log(res.data[0]);
-          replace("Home");
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
->>>>>>> Heberto
       });
 
     console.log(res.data[0].username);
@@ -76,7 +54,7 @@ export default class login extends React.Component {
       Alert.alert("User not found");
       return;
     } else {
-      //this.saveUserData(res.data[0].username);
+      
       try {
         console.log("estas dentroo");
         console.log(res.data[0]);
@@ -85,21 +63,11 @@ export default class login extends React.Component {
       } catch (e) {
         return;
       }
-    }
-
-      
+    }    
 
     this.setState({ loading: false });
   };
 
-  /*saveUserData = async (username) => {
-    console.log("running");
-    try {
-      await AsyncStorage.setItem("userName", username);
-    } catch (e) {
-      return;
-    }
-  };*/
 
   render() {
     if (this.state.loading) {

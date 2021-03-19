@@ -23,9 +23,6 @@ export default function App({ navigation }) {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="notifications" component={notifications} />
-        <Stack.Screen name="Example" component={Example} />
-        <Stack.Screen name="prueba2" component={prueba2} />
         <Stack.Screen name="Login" component={login} />
         <Stack.Screen name="Home" component={main} />
         <Stack.Screen name="Profile" component={profile} />
@@ -33,6 +30,9 @@ export default function App({ navigation }) {
         <Stack.Screen name="Inbox" component={inbox} />
         <Stack.Screen name="tags" component={tags} />
         <Stack.Screen name="task" component={task} />
+        <Stack.Screen name="notifications" component={notifications} />
+        <Stack.Screen name="Example" component={Example} />
+        <Stack.Screen name="prueba2" component={prueba2} />
       </Stack.Navigator>
     </NavigationContainer>
   );
