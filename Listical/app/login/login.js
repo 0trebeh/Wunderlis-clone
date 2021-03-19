@@ -26,7 +26,7 @@ export default class login extends React.Component {
     };
   }
 
-  async componentDidMount(){
+  async componentDidMount() {
     const value = null;
     try {
       value = await AsyncStorage.getItem("user");
@@ -34,39 +34,34 @@ export default class login extends React.Component {
       // Error retrieving data
     }
 
-    if(value !== null){
-      this.props.navigation.replace("Home", { 
-        id: 0, 
-        title: "inbox",
-        color: "gray" 
-        });
+    if (value !== null) {
+      this.props.navigation.replace("Home");
     }
-  };
+  }
 
   login = async () => {
-
     this.setState({ loading: true });
-    const res = await axios
-      .post("https://listical.herokuapp.com/api/users/login", {
+    const res = await axios.post(
+      "https://listical.herokuapp.com/api/users/login",
+      {
         username: this.state.username,
         password: this.state.password,
-      });
+      }
+    );
 
     if (res.data[0].status == 404) {
       Alert.alert("User not found");
     } else {
-      
       try {
         await AsyncStorage.setItem("user", JSON.stringify(res.data[0]));
         this.props.navigation.replace("Home");
       } catch (e) {
         //error
       }
-    }    
+    }
 
     this.setState({ loading: false });
   };
-
 
   render() {
     if (this.state.loading) {
@@ -89,7 +84,7 @@ export default class login extends React.Component {
         keyboardVerticalOffset={70}
         behavior="padding"
         style={{ flex: 1 }}
-        enabled={true}
+        enabled={Platform.OS === "ios"}
       >
         <View style={styles.container}>
           <StatusBar style="auto" />

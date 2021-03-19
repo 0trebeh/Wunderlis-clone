@@ -26,12 +26,11 @@ export default class Register extends React.Component {
   }
 
   register = async () => {
-    const res = await axios
-      .post("https://listical.herokuapp.com/api/users/", {
-        username: this.state.username,
-        email: this.state.email,
-        password: this.state.password,
-      });
+    const res = await axios.post("https://listical.herokuapp.com/api/users/", {
+      username: this.state.username,
+      email: this.state.email,
+      password: this.state.password,
+    });
 
     this.props.navigation.replace("Home");
     try {
@@ -51,7 +50,7 @@ export default class Register extends React.Component {
         keyboardVerticalOffset={70}
         behavior="padding"
         style={{ flex: 1 }}
-        enabled={true}
+        enabled={Platform.OS === "ios"}
       >
         <View style={styles.container}>
           <StatusBar style="auto" />
