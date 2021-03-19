@@ -29,43 +29,27 @@ export default class main extends React.Component {
   }
 
   async componentDidMount() {
-    this.getData();
     this.getElements();
   }
 
-  getData = async () => {
+  getElements = async () => {
+    this.setState({ loading: true });
+
     try {
       const value = await AsyncStorage.getItem("user");
       console.log(value);
-      this.setState({ user: value });
-      if (value !== null) {
-        console.log("null");
-      }
+      this.setState({ user: JSON.parse(value) });
     } catch (e) {
       // error reading value
     }
-  };
-
-  getElements = async () => {
-    this.setState({ loading: true });
-    let response = "";
-    if (this.state.loading === null) {
-      console.log("Already loaded");
-    } else {
-      try {
-        console.log("Loading");
-        const response = await AsyncStorage.getItem("user");
-        console.log(response);
-      } catch (error) {
-        // Error retrieving data
-      }
-    }
+    const id = this.state.user;
+    console.log(id);
     const res = await axios.get(
       "https://listical.herokuapp.com/api/lists/" +
-        JSON.parse(response).user_id.toString()
+      "1"
     );
 
-    this.setState({ user: response.username, Lists: res.data, loading: false });
+    this.setState({ Lists: res.data, loading: false });
     console.log(this.state.Lists);
   };
 
@@ -101,7 +85,7 @@ export default class main extends React.Component {
       color: "gray",
       edited: datetime(),
       created: datetime(),
-      user_id: JSON.parse(this.state.user).user_id,
+      user_id: this.state.user.user_id,
     };
     console.log(newList);
 
@@ -145,11 +129,6 @@ export default class main extends React.Component {
   };
 
   render() {
-    const { navigate } = this.props.navigation;
-    const username = this.state.user;
-
-    console.log();
-
     const renderLists = ({ item }) => (
       <TouchableOpacity
         onPress={() =>
@@ -193,10 +172,13 @@ export default class main extends React.Component {
           }}
         >
           <ActivityIndicator animating size="small" />
-          <Text>I am loading</Text>
         </View>
       );
     }
+
+    const { navigate } = this.props.navigation;
+    const username = this.state.user.username;
+
     return (
       <View style={styles.container}>
         <Button
