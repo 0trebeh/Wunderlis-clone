@@ -17,7 +17,6 @@ export default class Register extends React.Component {
     super(props);
 
     this.state = {
-      //loading: false,
       username: "",
       password: "",
       email: "",
@@ -26,23 +25,22 @@ export default class Register extends React.Component {
   }
 
   register = async () => {
-    //this.setState({ loading : true });
-    await axios
+    const res = await axios
       .post("https://listical.herokuapp.com/api/users/", {
         username: this.state.username,
         email: this.state.email,
         password: this.state.password,
-      })
-      .then(function (res) {
-        //this.setState({ loading : false });
-        //localStorage.setItem('user', JSON.stringify(res.data[0]));
-        console.log(res);
-        console.log(res.data[0]);
-        this.props.navigation.replace("Home");
-      })
-      .catch(function (error) {
-        console.log(error);
       });
+
+    this.props.navigation.replace("Home");
+    try {
+      console.log("estas dentroo");
+      console.log(res.data[0]);
+      await AsyncStorage.setItem("user", JSON.stringify(res.data[0]));
+      this.props.navigation.replace("Home");
+    } catch (e) {
+      return;
+    }
   };
 
   render() {
