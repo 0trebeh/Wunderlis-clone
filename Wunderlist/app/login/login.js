@@ -39,13 +39,35 @@ export default class login extends React.Component {
     }*/
   };
 
+<<<<<<< HEAD
   login = async () => {
 
+=======
+  login = async (replace) => {
+>>>>>>> Heberto
     this.setState({ loading: true });
     const res = await axios
       .post("https://listical.herokuapp.com/api/users/login", {
         username: this.state.username,
         password: this.state.password,
+<<<<<<< HEAD
+=======
+      })
+      .then(function (res) {
+        console.log(res);
+        if (res.data[0].status == 404) {
+          Alert.alert("User not found");
+          return;
+        } else {
+          localStorage.setItem("user", JSON.stringify(res.data[0]));
+          console.log(res);
+          console.log(res.data[0]);
+          replace("Home");
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+>>>>>>> Heberto
       });
 
     console.log(res.data[0].username);
@@ -94,7 +116,7 @@ export default class login extends React.Component {
       );
     }
 
-    const { navigate } = this.props.navigation;
+    const { navigate, replace } = this.props.navigation;
     return (
       <KeyboardAvoidingView
         keyboardVerticalOffset={70}
@@ -137,7 +159,7 @@ export default class login extends React.Component {
           <TouchableOpacity
             id="loginBtn"
             disabled={(this.state.username == "") | (this.state.password == "")}
-            onPress={() => this.login()}
+            onPress={() => this.login(replace)}
             style={
               this.state.username == "" || this.state.password == ""
                 ? styles.buttonLoginDisabled
@@ -151,12 +173,6 @@ export default class login extends React.Component {
             onPress={() => navigate("Register")}
           >
             <Text style={styles.buttonNavigation}>New User</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{ marginVertical: 30 }}
-            onPress={() => localStorage.removeItem("user")}
-          >
-            <Text style={styles.buttonNavigation}>clear</Text>
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>

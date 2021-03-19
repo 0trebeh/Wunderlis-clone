@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import {
   Text,
@@ -13,10 +13,17 @@ import {
   SearchBar,
   ActivityIndicator,
 } from "react-native";
-import DraggableFlatList from "react-native-draggable-flatlist";
+import DraggableFlatList, {
+  RenderItemParams,
+} from 'react-native-draggable-flatlist';
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { datetime, compare } from "../utils/datetime";
 import styles from "./inbox.css";
+
+
+
+
+
 
 export default function Inbox({ navigation, route }) {
   const [loading, setLoading] = useState(false);

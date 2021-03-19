@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Image, Button, FlatList, SafeAreaView, Alert, TextInput } from 'react-native';
+import { Text, View, TouchableOpacity, TextInput } from 'react-native';
 import Icon from "@expo/vector-icons/AntDesign";
 import styles from './profile.css';
 
@@ -14,7 +14,7 @@ export default class profile extends React.Component {
       password: '',
       email: '',
     }
-  }
+  } 
   
   componentDidMount(){
     this.getUser();
@@ -51,6 +51,12 @@ export default class profile extends React.Component {
             onChangeText={(password) => this.setState({password: password})}
           />
         </View>
+        <TouchableOpacity
+          style={{ marginVertical: 30 }}
+          onPress={() => localStorage.removeItem("user")}
+        >
+          <Text style={styles.buttonNavigation}>Logout</Text>
+        </TouchableOpacity>
       </View>   
     );
   };

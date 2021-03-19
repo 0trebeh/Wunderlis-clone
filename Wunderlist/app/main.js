@@ -149,6 +149,7 @@ export default class main extends React.Component {
     }
     return (
       <View style={styles.container}>
+<<<<<<< HEAD
         <DialogInput
           isDialogVisible={this.state.isDialogVisible}
           title={"Create list"}
@@ -161,6 +162,12 @@ export default class main extends React.Component {
             this.showDialog(false);
           }}
         ></DialogInput>
+=======
+        <Button
+            title="probar notification"
+            onPress={() => navigate("notifications")}
+          ></Button>
+>>>>>>> Heberto
         <View style={styles.body}>
           <TouchableOpacity onPress={() => navigate("Profile")}>
             <View style={styles.ContainerView}>
