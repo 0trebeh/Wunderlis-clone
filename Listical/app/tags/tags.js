@@ -14,6 +14,7 @@ import {
 import styles from './tags.css';
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { color } from "react-native-reanimated";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default class tags extends React.Component {
     constructor(props){

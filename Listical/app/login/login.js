@@ -29,13 +29,17 @@ export default class login extends React.Component {
   async componentDidMount(){
     const value = null;
     try {
-      value = await AsyncStorage.getItem('user');
+      value = await AsyncStorage.getItem("user");
     } catch (error) {
       // Error retrieving data
     }
 
     if(value !== null){
-      this.props.navigation.replace("Home");
+      this.props.navigation.replace("Home", { 
+        id: 0, 
+        title: "inbox",
+        color: "gray" 
+        });
     }
   };
 
@@ -48,14 +52,11 @@ export default class login extends React.Component {
         password: this.state.password,
       });
 
-    console.log(res.data[0].username);
-
     if (res.data[0].status == 404) {
       Alert.alert("User not found");
     } else {
       
       try {
-        console.log(res.data[0]);
         await AsyncStorage.setItem("user", JSON.stringify(res.data[0]));
         this.props.navigation.replace("Home");
       } catch (e) {

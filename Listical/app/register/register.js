@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import Icon from "@expo/vector-icons/AntDesign";
 import styles from "./register.css";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default class Register extends React.Component {
   constructor(props) {

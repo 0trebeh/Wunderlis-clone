@@ -21,13 +21,6 @@ const styles = StyleSheet.create({
   buttonCenter: {
     marginVertical: 7,
   },
-  //botones de abajo
-  fixToText: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginVertical: 13,
-    marginHorizontal: 20,
-  },
   //notas
   itemtop: {
     backgroundColor: "#ffd700",

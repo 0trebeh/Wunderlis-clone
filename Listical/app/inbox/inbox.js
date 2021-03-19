@@ -17,6 +17,7 @@ import DraggableFlatList from "react-native-draggable-flatlist";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { datetime, compare } from "../utils/datetime";
 import styles from "./inbox.css";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Inbox({ navigation, route }) {
   const [loading, setLoading] = useState(false);

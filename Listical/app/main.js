@@ -14,6 +14,7 @@ import {
 import styles from "./main.css";
 import { datetime, compare } from "./utils/datetime";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { color } from "react-native-reanimated";
 
 export default class main extends React.Component {
@@ -28,23 +29,25 @@ export default class main extends React.Component {
     }
   }
       
-  async componentDidMount(){
-    this.getElements();
+  componentDidMount(){
+    getElements();
   };
     
   getElements = async () => {
     this.setState({ loading : true });
-    let response = "";
+    const response = null;
     try {
       response = await AsyncStorage.getItem('user');
+      console.log(response);
     } catch (error) {
       // Error retrieving data
     }
     const res = await axios.get('https://listical.herokuapp.com/api/lists/' + 
     JSON.parse(response).user_id.toString()); 
+    console.log(res);
 
     this.setState({ user : response, Lists: res.data, loading : false });
-    console.log(this.state.Lists);
+    
   }
 
   createList = async () => {
@@ -124,6 +127,7 @@ export default class main extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     const username = JSON.parse(this.state.user).username;
+    console.log(username);
 
     const renderLists = ({ item }) => (
       <TouchableOpacity onPress={() => navigate("Inbox" , { 
@@ -179,7 +183,7 @@ export default class main extends React.Component {
             <View
               style={styles.ContainerView}
             >
-              <Text style={styles.categoryText}>{ username }</Text>
+              <Text style={styles.categoryText}>username</Text>
               <MaterialIcons name="person-outline" size={30} color="black" />
             </View>
           </TouchableOpacity>
@@ -206,7 +210,6 @@ export default class main extends React.Component {
           </TouchableOpacity>
           <Text style={styles.myLists}> My lists: </Text>
           <FlatList
-            scrollEnabled={false}
             data={this.state.Lists}
             renderItem={renderLists}
             keyExtractor={(item) => item.list_id.toString()}
