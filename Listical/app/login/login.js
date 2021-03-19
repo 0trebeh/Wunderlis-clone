@@ -23,13 +23,16 @@ export default class login extends React.Component {
       loading: false,
       username: "",
       password: "",
+      log: false,
     };
   }
 
   async componentDidMount() {
     const value = null;
     try {
+      console.log("hola adios");
       value = await AsyncStorage.getItem("user");
+      console.log(value);
     } catch (error) {
       // Error retrieving data
     }
@@ -73,7 +76,7 @@ export default class login extends React.Component {
             borderColor: "#CED0CE",
           }}
         >
-          <ActivityIndicator animating size="small" />
+          <ActivityIndicator animating size="small" color='#999999' />
         </View>
       );
     }
