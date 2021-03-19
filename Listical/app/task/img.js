@@ -5,7 +5,7 @@ import Constants from 'expo-constants';
 import axios from "axios";
 import { color } from 'react-native-reanimated';
 
-export default function ImagePicker() {
+export default function Image() {
   const [image, setImage] = useState(null);
   const [images, setImages] = useState([null]);
 
@@ -42,7 +42,8 @@ export default function ImagePicker() {
   }
 
   const sendImages = async () => {
-    
+
+    console.log(...images);
     /*
     const url = 'http://example.com/file-upload';
     const formData = new FormData();
@@ -52,9 +53,9 @@ export default function ImagePicker() {
         'content-type': 'multipart/form-data'
       }
     }
-    return  axios.post(url, formData, config)*/
-
-    Alert.alert("Imagen Enviada!", "Ahora podra verla en su tarea.");
+    return axios.post(url, formData, config).then(()=>{
+      Alert.alert("Imagen Enviada!", "Ahora podras verla en tu tarea.");
+    });   */
   } 
 
   return (
