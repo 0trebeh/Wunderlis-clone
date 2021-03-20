@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import {
   Text,
   View,
@@ -20,6 +21,7 @@ export default class profile extends React.Component {
       password: "",
       email: "",
       editData: false,
+      id: 0
     };
   }
 
@@ -37,15 +39,29 @@ export default class profile extends React.Component {
     this.setState({
       username: JSON.parse(res).username,
       email: JSON.parse(res).email,
+      id: JSON.parse(res).user_id
     });
   };
 
-  saveData() {
-    this.setState({ editData: false });
+  async saveData(navigate) {
+    console.log(llego)
+    const form = {
+      username : this.state.username,
+      email: this.state.email,
+      password : this.state.password
+    }
+    console.log(form)
+    const res = await axios.put("https://listical.herokuapp.com/api/users" + this.state.id, form);
+    console.log(res);
+    try {
+      await AsyncStorage.setItem("user", JSON.stringify(res.data[0]));
+      navigate("Profile");
+    } catch (e) {
+      //error
+    }
   }
 
-  logout = async () => {
-    var log = true;
+  logout = async (replace) => {
     Alert.alert(
       "Logout",
       "Are you sure you want log out?",
@@ -59,8 +75,13 @@ export default class profile extends React.Component {
         },
         {
           text: "Log out",
-          onPress: () => {
-            log = false;
+          onPress: async () => {
+            try {
+              await AsyncStorage.removeItem("user");
+              replace("Login");
+            } catch (error) {
+              // Error retrieving data
+            }
           },
         },
       ],
@@ -68,18 +89,10 @@ export default class profile extends React.Component {
         cancelable: false,
       }
     );
-    if (log == false) {
-      try {
-        await AsyncStorage.removeItem("user");
-        this.props.navigate.replace("login");
-      } catch (error) {
-        // Error retrieving data
-      }
-    }
   };
 
   render() {
-    const { navigate, route } = this.props.navigation;
+    const { navigate, route, replace } = this.props.navigation;
     if (this.state.editData == true) {
       return (
         <View
@@ -112,7 +125,7 @@ export default class profile extends React.Component {
           />
           <TouchableOpacity
             id="loginBtn"
-            onPress={() => this.saveData()}
+            onPress={() => this.saveData(navigate)}
             style={{
               marginHorizontal: 90,
               alignItems: "center",
@@ -154,7 +167,7 @@ export default class profile extends React.Component {
           </View>
           <TouchableOpacity
             style={{ marginVertical: 30 }}
-            onPress={() => this.logout()}
+            onPress={() => this.logout(replace)}
           >
             <Text style={{ color: "#d8412e", alignSelf: "center" }}>
               Logout

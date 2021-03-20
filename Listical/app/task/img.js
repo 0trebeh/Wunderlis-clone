@@ -52,7 +52,8 @@ export default function Img() {
   };
 
   const sendImages = async () => {
-    const url = 'http://localhost:4000/api/upload/images';
+    Alert.alert( {...images} );
+    /*const url = 'http://localhost:4000/api/upload/images';
     const formData = new FormData();
     formData.append(...images);
     const config = {
@@ -62,7 +63,7 @@ export default function Img() {
     }
     return axios.post(url, formData, config).then(()=>{
       Alert.alert("Imagen Enviada!", "Ahora podras verla en tu tarea.");
-    });
+    });*/
   };
 
   return (
