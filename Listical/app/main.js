@@ -168,25 +168,18 @@ export default class main extends React.Component {
           })
         }
       >
-        <View
-          style={{
-            marginBottom: 10,
-            padding: 0,
-            borderRadius: 14,
-            backgroundColor: "#eee",
-            borderColor: "#eee",
-            borderWidth: 10,
-            alignItems: "center",
-            flexDirection: "row",
-          }}
-        >
-          <MaterialIcons
-            style={{ marginHorizontal: 5 }}
-            name="format-list-bulleted"
-            size={20}
-            color={item.color}
-          />
-          <Text style={styles.listTitle}>{item.title}</Text>
+        <View style={styles.body}>
+          <View style={styles.ContainerView}>
+            <MaterialIcons
+              name="format-list-bulleted"
+              size={20}
+              color={item.color}
+            />
+            <Text style={styles.listTitle}>{item.title}</Text>
+            <TouchableOpacity onPress={() => this.remove(item)}>
+              <MaterialIcons name="delete-forever" size={25} color={"red"} />
+            </TouchableOpacity>
+          </View>
         </View>
       </TouchableOpacity>
     );
