@@ -36,8 +36,8 @@ export default class main extends React.Component {
     this.getElements();
   }
 
-  async componentDidUpdate(){
-    const value = await AsyncStorage.getItem("user")
+  async componentDidUpdate() {
+    const value = await AsyncStorage.getItem("user");
     this.setState({ user: JSON.parse(value) });
   }
 
@@ -86,7 +86,7 @@ export default class main extends React.Component {
 
   deleteList = async (item) => {
     Alert.alert(
-      "Delete list",
+      "Delete list?",
       "Are you sure you want to delete this list?",
       [
         {
@@ -147,10 +147,12 @@ export default class main extends React.Component {
               paddingHorizontal: 25,
               borderRadius: 23,
               height: 40,
-              marginBottom: 10, 
+              marginBottom: 10,
             }}
           >
-            <Text style={{ color: "white" }}  onPress={() => this.createList()}>Save</Text>
+            <Text style={{ color: "white" }} onPress={() => this.createList()}>
+              Save
+            </Text>
           </TouchableOpacity>
         </View>
       );
