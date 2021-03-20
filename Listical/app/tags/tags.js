@@ -10,11 +10,13 @@ import {
   Alert,
   TouchableOpacity,
   ActivityIndicator,
+  TextInput,
 } from "react-native";
 import styles from "./tags.css";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { color } from "react-native-reanimated";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import InputSpinner from "react-native-input-spinner";
 
 export default class tags extends React.Component {
   constructor(props) {
@@ -24,6 +26,8 @@ export default class tags extends React.Component {
       loading: false,
       tags: [],
       user: "",
+      createTag: false,
+      number: 1,
     };
   }
 
@@ -127,6 +131,62 @@ export default class tags extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
 
+    if (this.state.createTag == true) {
+      return (
+        <View>
+          <Text style={{ fontSize: 20, marginTop: 15 }}>Enter tag name:</Text>
+          <TextInput
+            style={{ marginTop: 15, fontSize: 15 }}
+            placeholder="Enter new listname"
+            placeholderTextColor="#d8412e"
+            onChangeText={(listname) => this.setState({ listname: listname })}
+          ></TextInput>
+          <Text style={{ fontSize: 20, marginTop: 15 }}>
+            Enter tag description:
+          </Text>
+          <TextInput
+            style={{ marginTop: 15, fontSize: 15 }}
+            placeholder="Enter new listname"
+            placeholderTextColor="#d8412e"
+            onChangeText={(listname) => this.setState({ listname: listname })}
+          ></TextInput>
+          <Text style={{ fontSize: 20, marginTop: 15, marginBottom: 15 }}>
+            Enter new tag priority:
+          </Text>
+          <InputSpinner
+            max={5}
+            min={1}
+            step={1}
+            colorMax={"#d8412e"}
+            colorMin={"#d8412e"}
+            value={this.state.number}
+            onChange={(num) => {
+              this.setState({ number: num });
+            }}
+          />
+          <TouchableOpacity
+            onPress={() => this.saveData()}
+            style={{
+              marginHorizontal: 90,
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: 30,
+              backgroundColor: "#d8412e",
+              paddingVertical: 13,
+              paddingHorizontal: 25,
+              borderRadius: 23,
+              height: 40,
+              marginBottom: 10,
+            }}
+          >
+            <Text style={{ color: "white" }} onPress={() => this.createList}>
+              Create tag
+            </Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+
     const renderTags = ({ item }) => (
       <TouchableOpacity>
         <View
@@ -175,7 +235,12 @@ export default class tags extends React.Component {
             renderItem={renderTags}
             keyExtractor={(item) => item.tag_id.toString()}
           ></FlatList>
-          <Button title="Add new tag" onPress={() => this.createTag()}></Button>
+          <Button
+            title="Add new tag"
+            onPress={() => this.setState({ createTag: true })}
+          >
+            {" "}
+          </Button>
         </View>
       </View>
     );

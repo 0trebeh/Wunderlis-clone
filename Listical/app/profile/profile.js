@@ -21,7 +21,7 @@ export default class profile extends React.Component {
       password: "",
       email: "",
       editData: false,
-      id: 0
+      id: 0,
     };
   }
 
@@ -39,24 +39,27 @@ export default class profile extends React.Component {
     this.setState({
       username: JSON.parse(res).username,
       email: JSON.parse(res).email,
-      id: JSON.parse(res).user_id
+      id: JSON.parse(res).user_id,
     });
   };
 
   async saveData() {
     console.log("llego");
     const form = {
-      username : this.state.username,
+      username: this.state.username,
       email: this.state.email,
-      password : this.state.password
-    }
+      password: this.state.password,
+    };
     let id = this.state.id;
     console.log(id.toString(), form);
-    const res = await axios.put("https://listical.herokuapp.com/api/users/" + id.toString(), form);
+    const res = await axios.put(
+      "https://listical.herokuapp.com/api/users/" + id.toString(),
+      form
+    );
     console.log(res);
     try {
       await AsyncStorage.setItem("user", JSON.stringify(res.data[0]));
-      this.setState({ editData: false })
+      this.setState({ editData: false });
     } catch (e) {
       //error
     }
@@ -150,6 +153,7 @@ export default class profile extends React.Component {
             style={{
               backgroundColor: "white",
               alignItems: "center",
+              paddingBottom: 20,
             }}
           >
             <Text style={{ color: "gray", marginTop: 5 }}>Signed in as:</Text>
@@ -159,7 +163,12 @@ export default class profile extends React.Component {
             <Text style={{ color: "gray", marginBottom: 30 }}>
               {this.state.email}
             </Text>
-            <Icon name="user" color="#d8412e" size={24} />
+            <Icon
+              name="user"
+              color="#d8412e"
+              size={24}
+              style={{ marginBottom: 20 }}
+            />
             <Button
               title="Edit user data"
               onPress={() => this.setState({ editData: true })}
