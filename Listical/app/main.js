@@ -62,14 +62,13 @@ export default class main extends React.Component {
   };
 
   createList = async () => {
-    let newtitle = "";
-    let pos = this.state.Lists.length;
+    let pos = this.state.Lists.length + 1;
     const randomColor = Math.floor(Math.random() * 16777215).toString(16);
     let newColor = "#" + randomColor;
     console.log(newColor);
 
     const newList = {
-      title: newtitle,
+      title: this.state.listname,
       position: pos,
       color: newColor,
       edited: datetime(),
@@ -78,9 +77,8 @@ export default class main extends React.Component {
     };
     console.log(newList);
 
-    let lists = this.state.Lists;
     const res = await axios.post("https://listical.herokuapp.com/api/list", newList);
-    this.setState({ Lists : lists.push( res.data[0] ) });
+    this.setState([ ...Lists, res.data[0] ]);
   };
 
   deleteList = async (item) => {
@@ -132,7 +130,7 @@ export default class main extends React.Component {
             style={{ marginTop: 15, fontSize: 15 }}
             placeholder="Enter new listname"
             placeholderTextColor="#d8412e"
-            onChangeText={(listname) => this.setState({ listname: listname })}
+            onChangeText={(name) => this.setState({ listname: name })}
           ></TextInput>
           <TouchableOpacity
             onPress={() => this.saveData()}
@@ -149,7 +147,7 @@ export default class main extends React.Component {
               marginBottom: 10, 
             }}
           >
-            <Text style={{ color: "white" }}  onPress={() => this.createList}>Save</Text>
+            <Text style={{ color: "white" }}  onPress={() => this.createList()}>Save</Text>
           </TouchableOpacity>
         </View>
       );
