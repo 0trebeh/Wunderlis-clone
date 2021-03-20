@@ -76,7 +76,7 @@ export default class login extends React.Component {
             borderColor: "#CED0CE",
           }}
         >
-          <ActivityIndicator animating size="small" color='#999999' />
+          <ActivityIndicator animating size="small" color="#999999" />
         </View>
       );
     }

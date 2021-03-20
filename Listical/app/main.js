@@ -36,8 +36,8 @@ export default class main extends React.Component {
     this.getElements();
   }
 
-  async componentDidUpdate(){
-    const value = await AsyncStorage.getItem("user")
+  async componentDidUpdate() {
+    const value = await AsyncStorage.getItem("user");
     this.setState({ user: JSON.parse(value) });
   }
 
@@ -86,7 +86,7 @@ export default class main extends React.Component {
 
   deleteList = async (item) => {
     Alert.alert(
-      "Delete list",
+      "Delete list?",
       "Are you sure you want to delete this list?",
       [
         {
@@ -147,10 +147,12 @@ export default class main extends React.Component {
               paddingHorizontal: 25,
               borderRadius: 23,
               height: 40,
-              marginBottom: 10, 
+              marginBottom: 10,
             }}
           >
-            <Text style={{ color: "white" }}  onPress={() => this.createList()}>Save</Text>
+            <Text style={{ color: "white" }} onPress={() => this.createList()}>
+              Save
+            </Text>
           </TouchableOpacity>
         </View>
       );
@@ -166,25 +168,18 @@ export default class main extends React.Component {
           })
         }
       >
-        <View
-          style={{
-            marginBottom: 10,
-            padding: 0,
-            borderRadius: 14,
-            backgroundColor: "#eee",
-            borderColor: "#eee",
-            borderWidth: 10,
-            alignItems: "center",
-            flexDirection: "row",
-          }}
-        >
-          <MaterialIcons
-            style={{ marginHorizontal: 5 }}
-            name="format-list-bulleted"
-            size={20}
-            color={item.color}
-          />
-          <Text style={styles.listTitle}>{item.title}</Text>
+        <View style={styles.body}>
+          <View style={styles.ContainerView}>
+            <MaterialIcons
+              name="format-list-bulleted"
+              size={20}
+              color={item.color}
+            />
+            <Text style={styles.listTitle}>{item.title}</Text>
+            <TouchableOpacity onPress={() => this.remove(item)}>
+              <MaterialIcons name="delete-forever" size={25} color={"red"} />
+            </TouchableOpacity>
+          </View>
         </View>
       </TouchableOpacity>
     );
