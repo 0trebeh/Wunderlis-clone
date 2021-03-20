@@ -52,25 +52,22 @@ export default function Img() {
   };
 
   const sendImages = async () => {
-    console.log(...images);
-    /*
-    const url = 'http://example.com/file-upload';
+    const url = 'http://localhost:4000/api/upload/images';
     const formData = new FormData();
     formData.append(...images);
     const config = {
       headers: {
-        'content-type': 'multipart/form-data'
+        'content-type': 'application/ x-www-form-urlencoded'
       }
     }
     return axios.post(url, formData, config).then(()=>{
       Alert.alert("Imagen Enviada!", "Ahora podras verla en tu tarea.");
-    });   */
+    });
   };
 
   return (
     <View style={{ flex: 1, justifyContent: "flex-end", marginTop: 75 }}>
       <View style={{ alignItems: "center", justifyContent: "center" }}>
-        <ScrollView>
           <FlatList
             data={images}
             renderItem={({ item }) => (
@@ -92,7 +89,6 @@ export default function Img() {
             )}
             keyExtractor={(item) => item}
           ></FlatList>
-        </ScrollView>
       </View>
       <View
         style={{

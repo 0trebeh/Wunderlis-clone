@@ -44,7 +44,7 @@ export default class main extends React.Component {
     } catch (e) {
       // error reading value
     }
-    const id = this.state.user;
+    let id = this.state.user;
     console.log(id);
     const res = await axios.get(
       "https://listical.herokuapp.com/api/lists/" + id.user_id.toString()
