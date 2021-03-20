@@ -5408,6 +5408,13 @@ react-native-dialog-input@^1.0.8:
   resolved "https://registry.yarnpkg.com/react-native-dialog-input/-/react-native-dialog-input-1.0.8.tgz#6813d3b158bbb85d83a94310f38695d9f2b02682"
   integrity sha512-W9YNMt6r+rUUMDEkOR1WMuGfSJw97ujB8H1xp8TjJTOnYVSlsf4aEP6t+J8tVk3XZaDcTawXgDjxH6E1WVWRog==
 
+react-native-dialog@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-dialog/-/react-native-dialog-6.2.0.tgz#d84123d6b5a3485891ffd6db9f571502f76f84cb"
+  integrity sha512-J16bhTGTDTQYFtWbfKIMD5GM4QFIupNm3hFjm7/X/VZ1ZeOsiTKTRt/JGeX6QPTAOhRiN1A+IPIfXPzgUmhUVw==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-native-draggable-flatlist@^2.5.4:
   version "2.5.4"
   resolved "https://registry.yarnpkg.com/react-native-draggable-flatlist/-/react-native-draggable-flatlist-2.5.4.tgz#31ef421e05a7273495995d11852f5892634ad860"
