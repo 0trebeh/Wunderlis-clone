@@ -12,13 +12,14 @@ import {
   ActivityIndicator,
   KeyboardAvoidingView,
   ScrollView,
+  TextInput,
 } from "react-native";
 import styles from "./main.css";
 import { datetime, compare } from "./utils/datetime";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { color } from "react-native-reanimated";
-
+import Dialog from "react-native-dialog";
 export default class main extends React.Component {
   constructor(props) {
     super(props);
@@ -27,6 +28,8 @@ export default class main extends React.Component {
       loading: false,
       Lists: [],
       user: "",
+      createNewList: false,
+      listname: "",
     };
   }
 
@@ -57,33 +60,16 @@ export default class main extends React.Component {
   createList = async () => {
     let newtitle = "";
     let pos = this.state.Lists.length;
+    const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+    let newColor = "#" + randomColor;
+    console.log(newColor);
 
-    Alert.alert(
-      "el titulo de la lista",
-      [
-        {
-          text: "Cancel",
-          onPress: () => {
-            return;
-          },
-          style: "cancel",
-        },
-        {
-          text: "Delete",
-          onPress: () => {
-            remove(item);
-          },
-        },
-      ],
-      {
-        cancelable: false,
-      }
-    );
+    Alert.alert();
 
     const newList = {
       title: newtitle,
       position: pos,
-      color: "gray",
+      color: newColor,
       edited: datetime(),
       created: datetime(),
       user_id: this.state.user.user_id,
@@ -129,7 +115,44 @@ export default class main extends React.Component {
     );
   };
 
+  saveData() {
+    this.setState({ createNewList: false });
+  }
+
   render() {
+    if (this.state.createNewList == true) {
+      return (
+        <View>
+          <Text style={{ fontSize: 20, marginTop: 15 }}>
+            Enter new list name:
+          </Text>
+          <TextInput
+            style={{ marginTop: 15, fontSize: 15 }}
+            placeholder="Enter new listname"
+            placeholderTextColor="#d8412e"
+            onChangeText={(listname) => this.setState({ listname: listname })}
+          ></TextInput>
+          <TouchableOpacity
+            onPress={() => this.saveData()}
+            style={{
+              marginHorizontal: 90,
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: 30,
+              backgroundColor: "#d8412e",
+              paddingVertical: 13,
+              paddingHorizontal: 25,
+              borderRadius: 23,
+              height: 40,
+              marginBottom: 10,
+            }}
+          >
+            <Text style={{ color: "white" }}>Save</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+
     const renderLists = ({ item }) => (
       <TouchableOpacity
         onPress={() =>
@@ -172,7 +195,7 @@ export default class main extends React.Component {
             borderColor: "#CED0CE",
           }}
         >
-          <ActivityIndicator animating size="small" color='#999999' />
+          <ActivityIndicator animating size="small" color="#999999" />
         </View>
       );
     }
@@ -182,50 +205,54 @@ export default class main extends React.Component {
 
     return (
       <ScrollView>
-      <View style={styles.container}>
-        <Button
-          title="probar notification"
-          onPress={() => navigate("notifications")}
-        ></Button>
-        <View style={styles.body}>
-          <TouchableOpacity onPress={() => navigate("Profile")}>
-            <View style={styles.ContainerView}>
-              <Text style={styles.categoryText}>{username}</Text>
-              <MaterialIcons name="person-outline" size={30} color="black" />
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigate("tags")}>
-            <View style={styles.ContainerView}>
-              <Text style={styles.categoryText}>Tags</Text>
-              <MaterialIcons name="bookmark-outline" size={30} color="black" />
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() =>
-              navigate("Inbox", {
-                id: 0,
-                title: "inbox",
-                color: "gray",
-              })
-            }
-          >
-            <View style={styles.ContainerView}>
-              <Text style={styles.categoryText}>Inbox</Text>
-              <MaterialIcons name="inbox" size={30} color="black" />
-            </View>
-          </TouchableOpacity>
-          <Text style={styles.myLists}> My lists: </Text>
-          <FlatList
-            data={this.state.Lists}
-            renderItem={renderLists}
-            keyExtractor={(item) => item.list_id.toString()}
-          ></FlatList>
+        <View style={styles.container}>
           <Button
-            title="Add new list"
-            onPress={() => this.createList()}
+            title="probar notification"
+            onPress={() => navigate("notifications")}
           ></Button>
+          <View style={styles.body}>
+            <TouchableOpacity onPress={() => navigate("Profile")}>
+              <View style={styles.ContainerView}>
+                <Text style={styles.categoryText}>{username}</Text>
+                <MaterialIcons name="person-outline" size={30} color="black" />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigate("tags")}>
+              <View style={styles.ContainerView}>
+                <Text style={styles.categoryText}>Tags</Text>
+                <MaterialIcons
+                  name="bookmark-outline"
+                  size={30}
+                  color="black"
+                />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                navigate("Inbox", {
+                  id: 0,
+                  title: "inbox",
+                  color: "gray",
+                })
+              }
+            >
+              <View style={styles.ContainerView}>
+                <Text style={styles.categoryText}>Inbox</Text>
+                <MaterialIcons name="inbox" size={30} color="black" />
+              </View>
+            </TouchableOpacity>
+            <Text style={styles.myLists}> My lists: </Text>
+            <FlatList
+              data={this.state.Lists}
+              renderItem={renderLists}
+              keyExtractor={(item) => item.list_id.toString()}
+            ></FlatList>
+            <Button
+              title="Add new list"
+              onPress={() => this.setState({ createNewList: true })}
+            ></Button>
+          </View>
         </View>
-      </View>
       </ScrollView>
     );
   }

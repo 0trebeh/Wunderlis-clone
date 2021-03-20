@@ -124,7 +124,6 @@ export default class profile extends React.Component {
             onChangeText={(password) => this.setState({ password: password })}
           />
           <TouchableOpacity
-            id="loginBtn"
             onPress={() => this.saveData(navigate)}
             style={{
               marginHorizontal: 90,
