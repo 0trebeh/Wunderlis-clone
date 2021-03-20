@@ -43,19 +43,20 @@ export default class profile extends React.Component {
     });
   };
 
-  async saveData(navigate) {
-    console.log(llego)
+  async saveData() {
+    console.log("llego");
     const form = {
       username : this.state.username,
       email: this.state.email,
       password : this.state.password
     }
-    console.log(form)
-    const res = await axios.put("https://listical.herokuapp.com/api/users" + this.state.id, form);
+    let id = this.state.id;
+    console.log(id.toString(), form);
+    const res = await axios.put("https://listical.herokuapp.com/api/users/" + id.toString(), form);
     console.log(res);
     try {
       await AsyncStorage.setItem("user", JSON.stringify(res.data[0]));
-      navigate("Profile");
+      this.setState({ editData: false })
     } catch (e) {
       //error
     }
@@ -124,7 +125,7 @@ export default class profile extends React.Component {
             onChangeText={(password) => this.setState({ password: password })}
           />
           <TouchableOpacity
-            onPress={() => this.saveData(navigate)}
+            onPress={() => this.saveData()}
             style={{
               marginHorizontal: 90,
               alignItems: "center",
