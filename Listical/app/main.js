@@ -62,6 +62,8 @@ export default class main extends React.Component {
   };
 
   createList = async () => {
+    console.log("llego");
+
     let pos = this.state.Lists.length + 1;
     const randomColor = Math.floor(Math.random() * 16777215).toString(16);
     let newColor = "#" + randomColor;
@@ -77,8 +79,9 @@ export default class main extends React.Component {
     };
     console.log(newList);
 
-    const res = await axios.post("https://listical.herokuapp.com/api/list", newList);
-    this.setState([ ...Lists, res.data[0] ]);
+    await axios.post("https://listical.herokuapp.com/api/list", newList);
+
+    this.getElements();
   };
 
   deleteList = async (item) => {
