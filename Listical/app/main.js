@@ -19,7 +19,6 @@ import { datetime, compare } from "./utils/datetime";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { color } from "react-native-reanimated";
-import Dialog from "react-native-dialog";
 export default class main extends React.Component {
   constructor(props) {
     super(props);
@@ -35,6 +34,11 @@ export default class main extends React.Component {
 
   async componentDidMount() {
     this.getElements();
+  }
+
+  async componentDidUpdate(){
+    const value = await AsyncStorage.getItem("user")
+    this.setState({ user: JSON.parse(value) });
   }
 
   getElements = async () => {
@@ -64,8 +68,6 @@ export default class main extends React.Component {
     let newColor = "#" + randomColor;
     console.log(newColor);
 
-    Alert.alert();
-
     const newList = {
       title: newtitle,
       position: pos,
@@ -76,9 +78,9 @@ export default class main extends React.Component {
     };
     console.log(newList);
 
-    /*let lists = this.state.Lists;
+    let lists = this.state.Lists;
     const res = await axios.post("https://listical.herokuapp.com/api/list", newList);
-    this.setState({ Lists : lists.push( res.data[0] ) });*/
+    this.setState({ Lists : lists.push( res.data[0] ) });
   };
 
   deleteList = async (item) => {
@@ -144,10 +146,10 @@ export default class main extends React.Component {
               paddingHorizontal: 25,
               borderRadius: 23,
               height: 40,
-              marginBottom: 10,
+              marginBottom: 10, 
             }}
           >
-            <Text style={{ color: "white" }}>Save</Text>
+            <Text style={{ color: "white" }}  onPress={() => this.createList}>Save</Text>
           </TouchableOpacity>
         </View>
       );
